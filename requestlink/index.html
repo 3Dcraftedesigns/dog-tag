@@ -3,46 +3,43 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dog Tag — Order details</title>
-  <meta name="theme-color" content="#10b981" />
+  <title>Dog Tag — Order Details</title>
+  <meta name="theme-color" content="#dbece3" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root{ --ink:#0f3d2f; --muted:#6b7d75; --ring:#cfe7dc }
+    :root { --ink:#0f3b2f; --soft:#e8f4ef; }
     body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
-    .card{border:1px solid #e3eee9; box-shadow:0 1px 0 rgba(16,24,40,.02); border-radius:18px}
-    .lbl{font-weight:800; letter-spacing:.02em; color:var(--ink)}
-    .hint{font-size:.8rem; color:var(--muted)}
-    .input{border:1px solid #d8e7df; border-radius:12px; height:48px}
-    .select{appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%23687973' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right .8rem center; background-size:20px}
-    .btn{background:#10b981; color:#fff; border-radius:12px; font-weight:700; padding:.9rem 1.1rem}
-    .btn:active{transform:translateY(1px)}
-    .badge{background:#d0f1e4; color:#0f3d2f; border-radius:9999px; padding:.3rem .8rem; font-weight:800}
+    .hint{font-size:12px;color:#6b7280}
+    .badge{background:#c8ecd9;color:#0e5b43}
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px}
+    .sub{font-size:12px;color:#6b7280;margin-left:8px}
   </style>
 </head>
-<body class="min-h-screen bg-emerald-50 text-slate-800">
-  <main class="mx-auto max-w-3xl px-5 py-10">
-    <header class="text-center mb-6">
-      <h1 class="text-5xl font-extrabold tracking-tight text-emerald-900">Welcome!</h1>
-      <p class="mt-3 text-emerald-900/80 text-[18px] leading-snug">
-        Thanks for ordering a custom NFC dog tag.<br/>
-        Please fill this form so i can make it exactly right.
-      </p>
+<body class="min-h-screen bg-[#eaf6f1] text-slate-800">
+  <main class="mx-auto max-w-3xl px-4 py-8 sm:py-10">
+    <header class="text-center">
+      <h1 class="text-5xl sm:text-6xl font-extrabold tracking-tight text-[#0f3b2f]">Welcome!</h1>
+      <p class="mt-4 text-lg text-[#0f3b2f]/90">Thanks for ordering a custom NFC dog tag.<br />Please fill this form so i can make it exactly right.</p>
     </header>
 
-    <section class="card bg-white p-5 md:p-6">
-      <div class="grid md:grid-cols-2 gap-4">
-        <div>
-          <label class="lbl block text-sm mb-2">DOG'S NAME</label>
-          <input id="dogName" class="input w-full px-3" placeholder="Type name" />
+    <!-- FORM CARD -->
+    <section class="card mt-6 p-5 sm:p-6">
+      <form id="orderForm" class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+        <!-- Dog name -->
+        <div class="sm:col-span-1">
+          <label class="block font-extrabold text-[#0f3b2f]">DOG'S NAME</label>
+          <input id="dogName" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" placeholder="Type name" />
         </div>
 
-        <div>
-          <label class="lbl block text-sm mb-1">BASE COLOR</label>
-          <div class="hint -mt-1 mb-1">(where the paw will be printed on)</div>
-          <select id="baseColor" class="input select w-full px-3">
+        <!-- Base color -->
+        <div class="sm:col-span-1">
+          <label class="block font-extrabold text-[#0f3b2f]">BASE COLOR
+            <span class="sub">(where the paw will be printed on)</span>
+          </label>
+          <select id="baseColor" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
             <option value="" selected>Select color</option>
             <option>Pink</option><option>Beige</option><option>Light Brown</option>
             <option>Purple</option><option>Blue</option><option>Brown</option>
@@ -51,14 +48,16 @@
           </select>
         </div>
 
-        <div>
-          <label class="lbl block text-sm mb-2">OWNER PHONE</label>
-          <input id="ownerPhone" class="input w-full px-3" placeholder="Type phone" />
+        <!-- Owner phone -->
+        <div class="sm:col-span-1">
+          <label class="block font-extrabold text-[#0f3b2f]">OWNER PHONE</label>
+          <input id="ownerPhone" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" placeholder="Type phone" />
         </div>
 
-        <div>
-          <label class="lbl block text-sm mb-2">PAW COLOR</label>
-          <select id="pawColor" class="input select w-full px-3">
+        <!-- Paw color -->
+        <div class="sm:col-span-1">
+          <label class="block font-extrabold text-[#0f3b2f]">PAW COLOR</label>
+          <select id="pawColor" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
             <option value="" selected>Select color</option>
             <option>Pink</option><option>Beige</option><option>Light Brown</option>
             <option>Purple</option><option>Blue</option><option>Brown</option>
@@ -67,14 +66,16 @@
           </select>
         </div>
 
-        <div>
-          <label class="lbl block text-sm mb-2">CHIP NUMBER (OPTIONAL)</label>
-          <input id="chip" class="input w-full px-3" placeholder="Type chip #" />
+        <!-- Chip -->
+        <div class="sm:col-span-1">
+          <label class="block font-extrabold text-[#0f3b2f]">CHIP NUMBER (OPTIONAL)</label>
+          <input id="chipNumber" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" placeholder="Type chip #" />
         </div>
 
-        <div>
-          <label class="lbl block text-sm mb-2">DOG NAME COLOR (BACK)</label>
-          <select id="backColor" class="input select w-full px-3">
+        <!-- Dog name color (back) -->
+        <div class="sm:col-span-1">
+          <label class="block font-extrabold text-[#0f3b2f]">DOG NAME COLOR (BACK)</label>
+          <select id="backNameColor" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
             <option value="" selected>Select color</option>
             <option>Pink</option><option>Beige</option><option>Light Brown</option>
             <option>Purple</option><option>Blue</option><option>Brown</option>
@@ -83,9 +84,10 @@
           </select>
         </div>
 
-        <div>
-          <label class="lbl block text-sm mb-2">SIZE</label>
-          <select id="size" class="input select w-full px-3">
+        <!-- Size -->
+        <div class="sm:col-span-1">
+          <label class="block font-extrabold text-[#0f3b2f]">SIZE</label>
+          <select id="size" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
             <option value="" selected>Select size</option>
             <option>Small — 29 × 29.4 mm</option>
             <option>Medium — 34.5 × 35 mm</option>
@@ -93,80 +95,116 @@
           </select>
         </div>
 
-        <div>
-          <label class="lbl block text-sm mb-2">LETTER TYPE</label>
-          <select id="letterType" class="input select w-full px-3">
+        <!-- Letter type -->
+        <div class="sm:col-span-1">
+          <label class="block font-extrabold text-[#0f3b2f]">LETTER TYPE</label>
+          <select id="letterType" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2">
             <option value="" selected>Select style</option>
-            <option value="srisakdi">Srisakdi (script)</option>
-            <option value="apple">Apple Symbols (sans)</option>
+            <option>Apple Symbols (sans)</option>
+            <option>Srisakdi (script)</option>
           </select>
         </div>
-      </div>
 
-      <div class="mt-4">
-        <label class="lbl block text-sm mb-2">NOTES</label>
-        <textarea id="notes" class="input w-full h-32 px-3 py-2" placeholder="Type any special requests here…"></textarea>
-      </div>
+        <!-- Notes -->
+        <div class="sm:col-span-2">
+          <label class="block font-extrabold text-[#0f3b2f]">NOTES</label>
+          <textarea id="notes" rows="4" class="mt-2 w-full rounded-xl border border-slate-300 px-3 py-2" placeholder="Type any special requests here..."></textarea>
+        </div>
+
+        <!-- Selected letter type preview (IMAGE GOES HERE) -->
+        <div class="sm:col-span-2">
+          <h3 class="text-xl font-extrabold text-[#0f3b2f]">Selected letter type preview</h3>
+          <div class="mt-3">
+            <!-- Upload letters-preview.png next to this HTML file -->
+            <img src="letters-preview.png" alt="Letter type examples"
+                 class="w-full rounded-xl border border-slate-200 shadow-sm">
+          </div>
+        </div>
+
+        <!-- Shareable link area -->
+        <div class="sm:col-span-2 mt-2">
+          <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <button id="makeLink" type="button"
+              class="rounded-xl bg-emerald-600 text-white px-5 py-2 font-semibold hover:bg-emerald-700 transition">
+              Create shareable link
+            </button>
+            <input id="shareUrl" class="flex-1 rounded-xl border border-slate-300 px-3 py-2"
+                   placeholder="Your link will appear here..." readonly />
+          </div>
+          <p class="hint mt-2">This link shows a read-only summary of the answers the customer entered.</p>
+        </div>
+      </form>
     </section>
 
-    <section class="card bg-white p-5 md:p-6 mt-6">
-      <h3 class="lbl text-lg mb-3">Selected letter type preview</h3>
-      <!-- Single image with both examples -->
-      <img src="lettertype_comparison.png" alt="Letter type comparison" class="w-full rounded-xl border border-emerald-100" />
-    </section>
-
-    <section class="card bg-white p-5 md:p-6 mt-6">
-      <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
-        <button id="makeLink" class="btn w-full md:w-auto">Create shareable link</button>
-        <span id="madeNote" class="hidden badge">Link created</span>
-      </div>
-      <input id="linkOut" class="input w-full px-3 mt-3" placeholder="Your link will appear here…" readonly />
-    </section>
-
+    <!-- Footer -->
     <footer class="mt-6 text-center">
-      <a href="https://www.instagram.com/3dcraftedesigns/" target="_blank" rel="noopener noreferrer"
-         class="inline-block rounded-full bg-emerald-200/70 px-3 py-1 text-xs font-semibold text-emerald-900 hover:bg-emerald-300 transition">
-        3Dcrafteddesigns
-      </a>
+      <span class="inline-block rounded-full px-4 py-1 badge font-semibold">3Dcrafteddesigns</span>
     </footer>
   </main>
 
   <script>
-    // Serialize form and make a clean shareable URL to your summary page
-    function getAnswers(){
-      const val = id => document.getElementById(id).value.trim();
-      return {
-        dogName: val('dogName'),
-        ownerPhone: val('ownerPhone'),
-        chip: val('chip'),
-        baseColor: val('baseColor'),
-        pawColor: val('pawColor'),
-        backColor: val('backColor'),
-        size: val('size'),
-        letterType: val('letterType'),
-        notes: val('notes')
-      };
+    // Build shareable summary link with query params (simple & readable).
+    function buildLink() {
+      const v = id => document.getElementById(id).value.trim();
+      const params = new URLSearchParams({
+        dog: v('dogName'),
+        phone: v('ownerPhone'),
+        chip: v('chipNumber'),
+        base: v('baseColor'),
+        paw: v('pawColor'),
+        back: v('backNameColor'),
+        size: v('size'),
+        letter: v('letterType'),
+        notes: v('notes'),
+        summary: '1'
+      });
+      const url = `${location.origin}${location.pathname}?${params.toString()}`;
+      return url;
     }
 
-    function encode(obj){
-      return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
-    }
-
-    document.getElementById('makeLink').addEventListener('click', ()=>{
-      const ans = getAnswers();
-      const payload = encode(ans);
-
-      // Put the answers in localStorage so the summary page can read them
-      const KEY = 'dogtag_order_answers';
-      localStorage.setItem(KEY, JSON.stringify(ans));
-
-      // Build link to /requestlink/
-      const base = location.origin + location.pathname.replace(/\/[^/]*$/, '/');
-      const url  = base + 'requestlink/?answers=' + payload;
-
-      document.getElementById('linkOut').value = url;
-      document.getElementById('madeNote').classList.remove('hidden');
+    document.getElementById('makeLink').addEventListener('click', () => {
+      const link = buildLink();
+      const out = document.getElementById('shareUrl');
+      out.value = link;
+      out.focus(); out.select();
     });
+
+    // If summary=1 is present, show a clean read-only summary instead of the form
+    (function maybeSummary(){
+      const q = new URLSearchParams(location.search);
+      if (q.get('summary') !== '1') return;
+
+      const data = {
+        "Dog's name": q.get('dog') || '—',
+        "Owner phone": q.get('phone') || '—',
+        "Chip number": q.get('chip') || '—',
+        "Base color": q.get('base') || '—',
+        "Paw color": q.get('paw') || '—',
+        "Dog name color (back)": q.get('back') || '—',
+        "Size": q.get('size') || '—',
+        "Letter type": q.get('letter') || '—',
+        "Notes": q.get('notes') || '—'
+      };
+
+      // Replace main with summary
+      const main = document.querySelector('main');
+      main.innerHTML = `
+        <header class="text-center">
+          <h1 class="text-5xl sm:text-6xl font-extrabold tracking-tight text-[#0f3b2f]">Order Summary</h1>
+          <p class="mt-4 text-lg text-[#0f3b2f]/90">Read-only view generated from the customer’s form.</p>
+        </header>
+        <section class="card mt-6 p-5 sm:p-6">
+          ${Object.entries(data).map(([k,v])=>`
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 py-2 border-b border-slate-200 last:border-0">
+              <div class="font-semibold text-[#0f3b2f]">${k}</div>
+              <div class="sm:col-span-2">${(v||'').replace(/</g,'&lt;')}</div>
+            </div>`).join('')}
+        </section>
+        <footer class="mt-6 text-center">
+          <span class="inline-block rounded-full px-4 py-1 badge font-semibold">3Dcrafteddesigns</span>
+        </footer>
+      `;
+    })();
   </script>
 </body>
 </html>

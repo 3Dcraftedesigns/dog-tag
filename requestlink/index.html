@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Custom NFC Dog Tag — Order Info</title>
+  <meta name="theme-color" content="#10b981" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}</style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-b from-emerald-50 to-emerald-100 text-slate-800">
+  <main class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-10">
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-emerald-900">Welcome!</h1>
+      <p class="mt-3 text-base sm:text-lg text-slate-700">
+        Thanks for ordering a custom NFC dog tag.
+      </p>
+      <p class="text-base sm:text-lg text-slate-700">
+        Please fill this form so I can make it exactly right.
+      </p>
+    </header>
+
+    <!-- Card -->
+    <section class="rounded-2xl border border-emerald-200 bg-white/90 shadow-sm p-5 sm:p-6">
+      <!-- Form grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+        <!-- Dog name -->
+        <div>
+          <label class="block text-sm font-extrabold tracking-wide text-emerald-900 mb-2">DOG'S NAME</label>
+          <input id="dogName" type="text" placeholder="Type name"
+                 class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+
+        <!-- Base color (with helper line) -->
+        <div>
+          <label class="block text-sm font-extrabold tracking-wide text-emerald-900">BASE COLOR</label>
+          <div class="text-xs text-slate-500 mb-2">(where the paw will be printed on)</div>
+          <select id="baseColor" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-[11px] focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="" selected disabled>Select color</option>
+            <option>Pink</option>
+            <option>Beige</option>
+            <option>Light Brown</option>
+            <option>Purple</option>
+            <option>Blue</option>
+            <option>Brown</option>
+            <option>Matte Green</option>
+            <option>Silver</option>
+            <option>Matte Pink</option>
+            <option>Matte Black</option>
+            <option>Black</option>
+            <option>Matte White</option>
+            <option>White</option>
+          </select>
+        </div>
+
+        <!-- Owner phone -->
+        <div>
+          <label class="block text-sm font-extrabold tracking-wide text-emerald-900 mb-2">OWNER PHONE</label>
+          <input id="ownerPhone" type="tel" placeholder="Type phone"
+                 class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+
+        <!-- Paw color -->
+        <div>
+          <label class="block text-sm font-extrabold tracking-wide text-emerald-900 mb-2">PAW COLOR</label>
+          <select id="pawColor" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-[11px] focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="" selected disabled>Select color</option>
+            <option>Pink</option>
+            <option>Beige</option>
+            <option>Light Brown</option>
+            <option>Purple</option>
+            <option>Blue</option>
+            <option>Brown</option>
+            <option>Matte Green</option>
+            <option>Silver</option>
+            <option>Matte Pink</option>
+            <option>Matte Black</option>
+            <option>Black</option>
+            <option>Matte White</option>
+            <option>White</option>
+          </select>
+        </div>
+
+        <!-- Chip number -->
+        <div>
+          <label class="block text-sm font-extrabold tracking-wide text-emerald-900 mb-2">CHIP NUMBER (OPTIONAL)</label>
+          <input id="chipNumber" type="text" placeholder="Type chip #"
+                 class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+        </div>
+
+        <!-- Dog name color (back) -->
+        <div>
+          <label class="block text-sm font-extrabold tracking-wide text-emerald-900 mb-2">DOG NAME COLOR (BACK)</label>
+          <select id="backNameColor" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-[11px] focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="" selected disabled>Select color</option>
+            <option>Pink</option>
+            <option>Beige</option>
+            <option>Light Brown</option>
+            <option>Purple</option>
+            <option>Blue</option>
+            <option>Brown</option>
+            <option>Matte Green</option>
+            <option>Silver</option>
+            <option>Matte Pink</option>
+            <option>Matte Black</option>
+            <option>Black</option>
+            <option>Matte White</option>
+            <option>White</option>
+          </select>
+        </div>
+
+        <!-- Size -->
+        <div>
+          <label class="block text-sm font-extrabold tracking-wide text-emerald-900 mb-2">SIZE</label>
+          <select id="size" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-[11px] focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="" selected disabled>Select size</option>
+            <option>Small — 29 × 29.4 mm</option>
+            <option>Medium — 34.5 × 35 mm</option>
+            <option>Big — 38 × 38.5 mm</option>
+          </select>
+        </div>
+
+        <!-- Letter type -->
+        <div>
+          <label class="block text-sm font-extrabold tracking-wide text-emerald-900 mb-2">LETTER TYPE</label>
+          <select id="letterType" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-[11px] focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            <option value="" selected disabled>Select style</option>
+            <option>Srisakdi (script)</option>
+            <option>Apple Symbols (sans)</option>
+          </select>
+        </div>
+
+        <!-- Notes (spans both columns) -->
+        <div class="md:col-span-2">
+          <label class="block text-sm font-extrabold tracking-wide text-emerald-900 mb-2">NOTES</label>
+          <textarea id="notes" rows="4" placeholder="Type any special requests here..."
+                    class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+        </div>
+      </div>
+
+      <!-- Letter type preview section -->
+      <div class="mt-8">
+        <h2 class="text-lg font-extrabold text-emerald-900">Selected letter type preview</h2>
+
+        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Srisakdi -->
+          <figure class="rounded-xl border border-slate-200 bg-white p-3 md:p-4">
+            <img src="font-srisakdi.png" alt="Srisakdi (script) example" class="w-full rounded-lg" />
+            <figcaption class="mt-2 text-center text-sm text-slate-600">Srisakdi (script)</figcaption>
+          </figure>
+
+          <!-- Apple Symbols -->
+          <figure class="rounded-xl border border-slate-200 bg-white p-3 md:p-4">
+            <img src="font-apple.png" alt="Apple Symbols (sans) example" class="w-full rounded-lg" />
+            <figcaption class="mt-2 text-center text-sm text-slate-600">Apple Symbols (sans)</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <!-- Shareable link tools -->
+      <div class="mt-8 rounded-xl border border-slate-200 bg-white p-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div class="text-sm text-slate-700">
+            <span class="font-semibold">Tip:</span> Press
+            <span class="font-mono">Cmd+Shift+O</span> (Mac) or <span class="font-mono">Ctrl+Shift+O</span> (Windows)
+            to open a read-only summary tab with all answers.
+          </div>
+          <div class="flex gap-3">
+            <button id="createLinkBtn" class="rounded-xl bg-emerald-600 text-white px-4 py-2 font-semibold hover:bg-emerald-700">
+              Create shareable link
+            </button>
+            <button id="copyLinkBtn" class="rounded-xl bg-white border border-slate-300 px-4 py-2 font-semibold hover:bg-slate-50">
+              Copy link
+            </button>
+          </div>
+        </div>
+        <input id="shareLink" type="text" readonly
+               class="mt-3 w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm select-all"
+               placeholder="Your link will appear here after you click 'Create shareable link'…" />
+      </div>
+    </section>
+
+    <!-- Footer badge -->
+    <footer class="mt-8 text-center">
+      <span class="inline-block rounded-full bg-emerald-200/70 px-4 py-1.5 text-sm font-semibold text-emerald-900">
+        3Dcraftedesigns
+      </span>
+    </footer>
+  </main>
+
+  <!-- ====== SHAREABLE LINK + REVIEW MODE SCRIPT ====== -->
+  <script>
+    // --- helpers ---
+    const $ = (id) => document.getElementById(id);
+    const val = (id) => (document.getElementById(id)?.value || '').trim();
+
+    // URL-safe base64 encode/decode of JSON
+    const encodeData = (obj) =>
+      btoa(unescape(encodeURIComponent(JSON.stringify(obj))))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/,'');
+
+    const decodeData = (str) =>
+      JSON.parse(decodeURIComponent(escape(atob(str.replace(/-/g,'+').replace(/_/g,'/')))));
+
+    function collectForm() {
+      return {
+        dogName: val('dogName'),
+        ownerPhone: val('ownerPhone'),
+        chipNumber: val('chipNumber'),
+        baseColor: val('baseColor'),
+        pawColor: val('pawColor'),
+        backNameColor: val('backNameColor'),
+        size: val('size'),
+        letterType: val('letterType'),
+        notes: val('notes'),
+        ts: new Date().toISOString()
+      };
+    }
+
+    function buildReviewLink() {
+      const payload = encodeData(collectForm());
+      // Keep your current path (works in a subfolder like /dog-tag/)
+      return `${location.origin}${location.pathname}?review=1#o=${payload}`;
+    }
+
+    // Buttons to create/copy link
+    $('createLinkBtn')?.addEventListener('click', () => {
+      const url = buildReviewLink();
+      $('shareLink').value = url;
+    });
+
+    $('copyLinkBtn')?.addEventListener('click', async () => {
+      const url = $('shareLink').value || buildReviewLink();
+      try {
+        await navigator.clipboard.writeText(url);
+        $('copyLinkBtn').textContent = 'Copied!';
+        setTimeout(() => $('copyLinkBtn').textContent = 'Copy link', 1200);
+      } catch {
+        alert('Copy failed — the link is shown in the box, you can copy it manually.');
+      }
+      $('shareLink').value = url;
+    });
+
+    // Keyboard shortcut: Cmd+Shift+O / Ctrl+Shift+O  (also tries Cmd+O)
+    window.addEventListener('keydown', (e) => {
+      const keyO = (e.key || '').toLowerCase() === 'o';
+      const mac = navigator.platform.toUpperCase().includes('MAC');
+      const combo = (mac ? e.metaKey : e.ctrlKey) && e.shiftKey && keyO;
+      const tryPlain = mac && e.metaKey && keyO && !e.shiftKey; // attempt Cmd+O
+
+      if (combo || tryPlain) {
+        e.preventDefault();
+        const url = buildReviewLink();
+        window.open(url, '_blank', 'noopener');
+      }
+    });
+
+    // --- REVIEW MODE ---
+    (function renderReviewIfNeeded(){
+      const isReview = new URLSearchParams(location.search).get('review') === '1';
+      if (!isReview) return;
+      const hash = new URL(location.href).hash.slice(1);
+      const params = new URLSearchParams(hash);
+      const payload = params.get('o');
+      if (!payload) return;
+
+      const d = decodeData(payload);
+      const pick = (t) => (t && String(t).trim()) ? t : '—';
+
+      const fontImg = (d.letterType || '').toLowerCase().startsWith('srisakdi')
+        ? 'font-srisakdi.png'
+        : ((d.letterType || '').toLowerCase().startsWith('apple') ? 'font-apple.png' : '');
+
+      // Replace body with a clean summary card
+      document.body.innerHTML = `
+        <main class="mx-auto max-w-2xl p-6 font-sans text-slate-800"
+              style="font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial;">
+          <h1 class="text-3xl font-extrabold text-emerald-900">Order Summary</h1>
+          <p class="mt-1 text-slate-600 text-sm">Generated ${new Date(d.ts || Date.now()).toLocaleString()}</p>
+
+          <div class="mt-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div><dt class="text-xs uppercase text-slate-500">Dog’s name</dt><dd class="font-medium mt-1">${pick(d.dogName)}</dd></div>
+              <div><dt class="text-xs uppercase text-slate-500">Owner phone</dt><dd class="font-medium mt-1">${pick(d.ownerPhone)}</dd></div>
+              <div><dt class="text-xs uppercase text-slate-500">Chip number</dt><dd class="font-medium mt-1">${pick(d.chipNumber)}</dd></div>
+              <div><dt class="text-xs uppercase text-slate-500">Size</dt><dd class="font-medium mt-1">${pick(d.size)}</dd></div>
+              <div><dt class="text-xs uppercase text-slate-500">Base color</dt><dd class="font-medium mt-1">${pick(d.baseColor)}</dd></div>
+              <div><dt class="text-xs uppercase text-slate-500">Paw color</dt><dd class="font-medium mt-1">${pick(d.pawColor)}</dd></div>
+              <div><dt class="text-xs uppercase text-slate-500">Back name color</dt><dd class="font-medium mt-1">${pick(d.backNameColor)}</dd></div>
+              <div><dt class="text-xs uppercase text-slate-500">Letter type</dt><dd class="font-medium mt-1">${pick(d.letterType)}</dd></div>
+            </dl>
+
+            <div class="mt-5">
+              <dt class="text-xs uppercase text-slate-500">Notes</dt>
+              <dd class="font-medium mt-1 whitespace-pre-wrap">${pick(d.notes)}</dd>
+            </div>
+
+            ${fontImg ? `
+              <div class="mt-6">
+                <img src="${fontImg}" alt="Selected letter type preview" style="width:100%;max-width:420px;border-radius:12px;border:1px solid #e5e7eb;">
+              </div>` : ''}
+
+            <div class="mt-6 flex gap-3">
+              <button id="copyBtn" class="rounded-xl bg-emerald-600 text-white px-4 py-2 font-semibold">Copy order text</button>
+              <button id="backBtn" class="rounded-xl bg-white border border-slate-300 px-4 py-2 font-semibold">Back to form</button>
+            </div>
+          </div>
+        </main>
+      `;
+
+      const summaryText =
+`Dog: ${pick(d.dogName)}
+Phone: ${pick(d.ownerPhone)}
+Chip: ${pick(d.chipNumber)}
+Size: ${pick(d.size)}
+
+Base color: ${pick(d.baseColor)}
+Paw color: ${pick(d.pawColor)}
+Back name color: ${pick(d.backNameColor)}
+Letter type: ${pick(d.letterType)}
+
+Notes:
+${pick(d.notes)}`;
+
+      document.getElementById('copyBtn')?.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(summaryText); alert('Order copied to clipboard'); }
+        catch { alert('Copy failed — you can select the text and copy manually.'); }
+      });
+
+      document.getElementById('backBtn')?.addEventListener('click', () => {
+        location.href = location.origin + location.pathname; // back to blank form
+      });
+    })();
+  </script>
+</body>
+</html>

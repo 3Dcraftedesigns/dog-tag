@@ -9,7 +9,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <style>body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}</style>
+  <style>
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+    /* tiny caret for visual dropdown hint on all selects (purely cosmetic) */
+    select { background-image: linear-gradient(45deg, transparent 50%, #256946 50%),
+                             linear-gradient(135deg, #256946 50%, transparent 50%),
+                             linear-gradient(to right, transparent, transparent);
+             background-position: calc(100% - 18px) calc(1em + 2px), calc(100% - 12px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
+             background-size: 6px 6px, 6px 6px, 1px 1.5em;
+             background-repeat: no-repeat; }
+  </style>
 </head>
 
 <body class="min-h-screen bg-gradient-to-b from-emerald-50 to-emerald-100 text-slate-800">
@@ -150,13 +159,13 @@
         <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
           <!-- Srisakdi -->
           <figure class="rounded-xl border border-slate-200 bg-white p-3 md:p-4">
-            <img src="font-srisakdi.png" alt="Srisakdi (script) example" class="w-full rounded-lg" />
+            <img id="imgSrisakdi" alt="Srisakdi (script) example" class="w-full rounded-lg" />
             <figcaption class="mt-2 text-center text-sm text-slate-600">Srisakdi (script)</figcaption>
           </figure>
 
           <!-- Apple Symbols -->
           <figure class="rounded-xl border border-slate-200 bg-white p-3 md:p-4">
-            <img src="font-apple.png" alt="Apple Symbols (sans) example" class="w-full rounded-lg" />
+            <img id="imgApple" alt="Apple Symbols (sans) example" class="w-full rounded-lg" />
             <figcaption class="mt-2 text-center text-sm text-slate-600">Apple Symbols (sans)</figcaption>
           </figure>
         </div>
@@ -188,22 +197,40 @@
     <!-- Footer badge -->
     <footer class="mt-8 text-center">
       <span class="inline-block rounded-full bg-emerald-200/70 px-4 py-1.5 text-sm font-semibold text-emerald-900">
-        3Dcraftedesigns
+        3Dcrafteddesigns
       </span>
     </footer>
   </main>
 
-  <!-- ====== SHAREABLE LINK + REVIEW MODE SCRIPT ====== -->
+  <!-- ====== EMBEDDED IMAGES + SHAREABLE LINK / REVIEW MODE ====== -->
   <script>
-    // --- helpers ---
+    /* Inline previews so you don’t need extra files */
+    const SRISAKDI_DATA_URI =
+      'data:image/svg+xml;utf8,' +
+      encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600">
+  <rect width="100%" height="100%" rx="24" ry="24" fill="#0b0b0b"/>
+  <circle cx="450" cy="260" r="95" fill="none" stroke="#dedede" stroke-width="10"/>
+  <text x="50%" y="440" font-family="Srisakdi, cursive" font-size="96" fill="#ffffff" text-anchor="middle">Cooper</text>
+</svg>`);
+
+    const APPLE_DATA_URI =
+      'data:image/svg+xml;utf8,' +
+      encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600">
+  <rect width="100%" height="100%" rx="24" ry="24" fill="#0b0b0b"/>
+  <circle cx="450" cy="260" r="95" fill="none" stroke="#dedede" stroke-width="10"/>
+  <text x="50%" y="440" font-family="SF Pro Text, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Arial, sans-serif"
+        font-size="96" fill="#ffffff" text-anchor="middle">ROCKY</text>
+</svg>`);
+
+    document.getElementById('imgSrisakdi').src = SRISAKDI_DATA_URI;
+    document.getElementById('imgApple').src = APPLE_DATA_URI;
+
+    // --- helpers for shareable link / review mode ---
     const $ = (id) => document.getElementById(id);
     const val = (id) => (document.getElementById(id)?.value || '').trim();
-
-    // URL-safe base64 encode/decode of JSON
     const encodeData = (obj) =>
       btoa(unescape(encodeURIComponent(JSON.stringify(obj))))
-        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/,'');
-
+        .replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
     const decodeData = (str) =>
       JSON.parse(decodeURIComponent(escape(atob(str.replace(/-/g,'+').replace(/_/g,'/')))));
 
@@ -224,59 +251,50 @@
 
     function buildReviewLink() {
       const payload = encodeData(collectForm());
-      // Keep your current path (works in a subfolder like /dog-tag/)
       return `${location.origin}${location.pathname}?review=1#o=${payload}`;
     }
 
-    // Buttons to create/copy link
+    // Buttons
     $('createLinkBtn')?.addEventListener('click', () => {
-      const url = buildReviewLink();
-      $('shareLink').value = url;
+      $('shareLink').value = buildReviewLink();
     });
-
     $('copyLinkBtn')?.addEventListener('click', async () => {
       const url = $('shareLink').value || buildReviewLink();
       try {
         await navigator.clipboard.writeText(url);
         $('copyLinkBtn').textContent = 'Copied!';
-        setTimeout(() => $('copyLinkBtn').textContent = 'Copy link', 1200);
+        setTimeout(()=> $('copyLinkBtn').textContent = 'Copy link', 1200);
       } catch {
-        alert('Copy failed — the link is shown in the box, you can copy it manually.');
+        alert('Copy failed — copy the link shown in the box manually.');
       }
       $('shareLink').value = url;
     });
 
-    // Keyboard shortcut: Cmd+Shift+O / Ctrl+Shift+O  (also tries Cmd+O)
+    // Keyboard shortcut: Cmd+Shift+O (Mac) / Ctrl+Shift+O (Win/Linux). Tries Cmd+O on Mac, too.
     window.addEventListener('keydown', (e) => {
       const keyO = (e.key || '').toLowerCase() === 'o';
       const mac = navigator.platform.toUpperCase().includes('MAC');
       const combo = (mac ? e.metaKey : e.ctrlKey) && e.shiftKey && keyO;
-      const tryPlain = mac && e.metaKey && keyO && !e.shiftKey; // attempt Cmd+O
-
+      const tryPlain = mac && e.metaKey && keyO && !e.shiftKey;
       if (combo || tryPlain) {
         e.preventDefault();
-        const url = buildReviewLink();
-        window.open(url, '_blank', 'noopener');
+        window.open(buildReviewLink(), '_blank', 'noopener');
       }
     });
 
-    // --- REVIEW MODE ---
-    (function renderReviewIfNeeded(){
+    // REVIEW MODE (read-only summary when opening ?review=1#o=...)
+    (function(){
       const isReview = new URLSearchParams(location.search).get('review') === '1';
       if (!isReview) return;
-      const hash = new URL(location.href).hash.slice(1);
-      const params = new URLSearchParams(hash);
-      const payload = params.get('o');
+      const payload = new URLSearchParams(location.hash.slice(1)).get('o');
       if (!payload) return;
 
       const d = decodeData(payload);
-      const pick = (t) => (t && String(t).trim()) ? t : '—';
+      const pick = (t)=> (t && String(t).trim()) ? t : '—';
+      const fontImg =
+        (d.letterType||'').toLowerCase().startsWith('srisakdi') ? SRISAKDI_DATA_URI :
+        (d.letterType||'').toLowerCase().startsWith('apple')    ? APPLE_DATA_URI : '';
 
-      const fontImg = (d.letterType || '').toLowerCase().startsWith('srisakdi')
-        ? 'font-srisakdi.png'
-        : ((d.letterType || '').toLowerCase().startsWith('apple') ? 'font-apple.png' : '');
-
-      // Replace body with a clean summary card
       document.body.innerHTML = `
         <main class="mx-auto max-w-2xl p-6 font-sans text-slate-800"
               style="font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, Arial;">
@@ -329,9 +347,8 @@ ${pick(d.notes)}`;
 
       document.getElementById('copyBtn')?.addEventListener('click', async () => {
         try { await navigator.clipboard.writeText(summaryText); alert('Order copied to clipboard'); }
-        catch { alert('Copy failed — you can select the text and copy manually.'); }
+        catch { alert('Copy failed — select and copy manually.'); }
       });
-
       document.getElementById('backBtn')?.addEventListener('click', () => {
         location.href = location.origin + location.pathname; // back to blank form
       });

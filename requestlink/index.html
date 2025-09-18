@@ -19,7 +19,6 @@
   h1{margin:0 0 12px;font-size:clamp(28px,5vw,48px);line-height:1.05;text-align:center;font-weight:800}
   .lead,.lead2{text-align:center;margin:0;color:var(--ink-soft);font-weight:500}
   .lead2{margin-top:4px}
-
   .card{margin-top:18px;background:var(--card);border:2px solid #a5cfbf40;border-radius:var(--radius);padding:20px}
 
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px}
@@ -31,7 +30,6 @@
     min-height:64px;
   }
   @media (max-width:760px){ .label{min-height:unset} }
-
   .subnote{display:block;margin-top:2px;font-size:12px;color:var(--ink-soft);font-weight:600;line-height:1.1}
 
   .field{display:flex;align-items:center;min-height:56px;padding:0 14px;background:var(--field-fill);
@@ -43,7 +41,6 @@
     font-size:17px;color:var(--ink);appearance:none;-webkit-appearance:none;outline:none
   }
   ::placeholder{color:#6c8e83}
-
   .select-wrap{position:relative}
   .select-wrap::after{
     content:"";position:absolute;right:14px;top:50%;transform:translateY(-50%);
@@ -62,8 +59,8 @@
   .actions{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
   .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;min-height:44px;background:#0a7d57;color:#fff;border:0;border-radius:999px;font-weight:800;cursor:pointer}
   .btn:active{transform:translateY(1px)}
-  .out{flex:1;min-height:44px;padding:10px 12px;border:2px dashed #97b6ab;border-radius:10px;color:#335047;background:#f5fbf8}
-  .copyBtn{display:none}
+  .btn.secondary{background:#0b3f2e}
+  .out{flex:1;min-width:260px;min-height:44px;padding:10px 12px;border:2px dashed #97b6ab;border-radius:10px;color:#335047;background:#f5fbf8}
 
   footer{text-align:center;margin-top:22px}
   .chip{display:inline-block;padding:.5rem 1rem;border-radius:999px;background:#c7eadc;color:#0b3f2e;font-weight:800}
@@ -165,12 +162,14 @@
 
       <h3>Letter type previews</h3>
       <div class="preview-card">
-        <img class="preview-img" src="lettertype_preview_WHITE_DONE.png" alt="Letter type examples: Srisakdi (script) and Apple Symbols (sans)">
+        <!-- keep this image file in the same folder -->
+        <img class="preview-img" src="lettertype_preview_WHITE_DONE.png"
+             alt="Letter type examples: Srisakdi (script) and Apple Symbols (sans)">
       </div>
 
       <div class="actions">
         <button id="mk" class="btn">Create shareable link</button>
-        <button id="copyLink" class="btn copyBtn">Copy link</button>
+        <button id="copyBtn" class="btn secondary" style="display:none">Copy link</button>
         <input id="out" class="out" type="text" readonly placeholder="Your link will appear here…">
       </div>
     </div>
@@ -178,31 +177,9 @@
     <footer><div class="chip">3Dcrafteddesigns</div></footer>
   </div>
 
+<!-- LZ-String for compact, URL-safe compression -->
+<script src="https://cdn.jsdelivr.net/npm/lz-string@1.5.0/libs/lz-string.min.js"></script>
 <script>
-  // Always start clean after a reload (avoid auto-fill from some browsers)
-  window.addEventListener('pageshow', () => {
-    ['dogName','ownerName','ownerPhone','chip','notes'].forEach(id => {
-      const el = document.getElementById(id); if(el) el.value = '';
-    });
-    ['baseColor','pawColor','backColor','size','letterType'].forEach(id => {
-      const el = document.getElementById(id); if(el) el.selectedIndex = 0;
-    });
-    document.getElementById('out').value = '';
-    document.getElementById('copyLink').style.display = 'none';
-  });
-
-  function buildSummaryURL(data){
-    // Build a URL that points to /request/ (sibling to /requestlink/)
-    const here = new URL(window.location.href);
-    // Ensure trailing slash
-    let basePath = here.pathname.endsWith('/') ? here.pathname : (here.pathname + '/');
-    // Swap .../requestlink/ → .../request/
-    basePath = basePath.replace(/\/requestlink\/?$/i, '/request/');
-    const out = new URL(basePath, `${here.origin}`);
-    out.hash = 'data=' + encodeURIComponent(JSON.stringify(data));
-    return out.toString();
-  }
-
   function makeLink(){
     const data = {
       dogName: document.getElementById('dogName').value.trim(),
@@ -216,31 +193,42 @@
       letterType: document.getElementById('letterType').value,
       notes: document.getElementById('notes').value.trim()
     };
-    const url = buildSummaryURL(data);
+
+    const packed = LZString.compressToEncodedURIComponent(JSON.stringify(data));
+    const url = location.origin +
+      location.pathname.replace(/\/requestlink\/?$/, "/request/") +
+      "#data=" + packed;
+
     const out = document.getElementById('out');
     out.value = url;
 
-    const btn = document.getElementById('copyLink');
-    btn.style.display = 'inline-flex';
-    btn.onclick = async () => {
-      try{
-        await navigator.clipboard.writeText(url);
-        const old = btn.textContent; btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent=old, 900);
-      }catch(e){
-        out.select(); document.execCommand('copy');
-      }
+    const copyBtn = document.getElementById('copyBtn');
+    copyBtn.style.display = 'inline-flex';
+    copyBtn.onclick = () => {
+      out.select();
+      document.execCommand('copy');
+      copyBtn.textContent = "Copied!";
+      setTimeout(()=> copyBtn.textContent = "Copy link", 1200);
     };
   }
 
   document.getElementById('mk').addEventListener('click', makeLink);
 
-  // Keyboard shortcut: Cmd/Ctrl+Shift+0 to create link
+  // Keyboard shortcut Cmd/Ctrl + Shift + 0
   window.addEventListener('keydown', (e)=>{
     const isMac = navigator.platform.toUpperCase().includes('MAC');
     if ((isMac && e.metaKey && e.shiftKey && e.key === '0') ||
         (!isMac && e.ctrlKey && e.shiftKey && e.key === '0')) {
       e.preventDefault(); makeLink();
     }
+  });
+
+  // Clear inputs on every load (so a refresh starts clean)
+  window.addEventListener('load', ()=>{
+    document.querySelectorAll('input[type="text"], textarea').forEach(el => el.value = "");
+    document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+    document.getElementById('out').value = "";
+    document.getElementById('copyBtn').style.display = 'none';
   });
 </script>
 </body>

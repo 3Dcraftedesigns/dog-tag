@@ -7,178 +7,66 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-
 <style>
   :root{
-    --bg: #eaf7f1;              /* page background (light mint) */
-    --card: #e3f3eb;            /* card fill (same family, a bit deeper) */
-    --ink: #0b3f2e;             /* headings/labels */
-    --ink-soft:#284f43;         /* subtle text */
-    --field-border:#4b8a77;     /* field border + caret */
-    --field-fill:#dff1ea;       /* field interior */
-    --radius:16px;
+    --bg:#eaf7f1; --card:#e3f3eb; --ink:#0b3f2e; --ink-soft:#284f43;
+    --field-border:#4b8a77; --field-fill:#dff1ea; --radius:16px;
   }
   *{box-sizing:border-box}
   html,body{margin:0}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
-  }
+  body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
   .wrap{max-width:980px;margin:28px auto 56px;padding:0 16px}
-  h1{
-    margin:0 0 12px;
-    font-size: clamp(28px, 5vw, 48px);
-    line-height:1.05;
-    text-align:center;
-    font-weight:800;
-  }
-  .lead, .lead2{
-    text-align:center;
-    margin:0;
-    color:var(--ink-soft);
-    font-weight:500;
-  }
+  h1{margin:0 0 12px;font-size:clamp(28px,5vw,48px);line-height:1.05;text-align:center;font-weight:800}
+  .lead,.lead2{text-align:center;margin:0;color:var(--ink-soft);font-weight:500}
   .lead2{margin-top:4px}
 
-  .card{
-    margin-top:18px;
-    background:var(--card);
-    border:2px solid #a5cfbf40;
-    border-radius:var(--radius);
-    padding:20px;
-  }
+  .card{margin-top:18px;background:var(--card);border:2px solid #a5cfbf40;border-radius:var(--radius);padding:20px}
 
-  /* grid */
-  .grid{
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    gap:18px 24px;
-  }
-  @media (max-width:760px){
-    .grid{ grid-template-columns: 1fr; }
-  }
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px}
+  @media (max-width:760px){.grid{grid-template-columns:1fr}}
 
-  /* fields */
+  /* LABELS — fixed height on desktop so rows align */
   .label{
-    font-weight:800;
-    letter-spacing:.3px;
-    font-size:18px;
-    margin-bottom:8px;
+    font-weight:800;letter-spacing:.3px;font-size:18px;margin:0 0 8px;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    min-height:64px; /* ← big enough for long titles + subnote */
   }
-  .subnote{
-    display:block;
-    margin-top:2px;
-    font-size:12px;
-    color:var(--ink-soft);
-    font-weight:600;
-  }
+  @media (max-width:760px){ .label{min-height:unset} }
 
-  .field{
-    display:flex;
-    align-items:center;
-    min-height:56px;
-    padding:0 14px;
-    background:var(--field-fill);
-    border:2px solid var(--field-border);
-    border-radius:14px;
-  }
-  .field:focus-within{
-    outline:3px solid #87c7b2;
-    outline-offset:2px;
-  }
+  .subnote{display:block;margin-top:2px;font-size:12px;color:var(--ink-soft);font-weight:600;line-height:1.1}
 
-  /* normalize input/select visual size + baseline */
-  input[type="text"],
-  select{
-    flex:1;
-    height:40px;
-    line-height:40px;
-    background:transparent;
-    border:0;
-    padding:0;
-    margin:0;
-    font-size:17px;
-    color:var(--ink);
-    appearance:none;
-    -webkit-appearance:none;
-    outline:none;
+  .field{display:flex;align-items:center;min-height:56px;padding:0 14px;background:var(--field-fill);
+         border:2px solid var(--field-border);border-radius:14px}
+  .field:focus-within{outline:3px solid #87c7b2;outline-offset:2px}
+
+  input[type="text"],select{
+    flex:1;height:40px;line-height:40px;background:transparent;border:0;padding:0;margin:0;
+    font-size:17px;color:var(--ink);appearance:none;-webkit-appearance:none;outline:none
   }
   ::placeholder{color:#6c8e83}
 
-  /* select caret */
-  .select-wrap{ position:relative; }
+  .select-wrap{position:relative}
   .select-wrap::after{
-    content:"";
-    position:absolute;
-    right:14px;
-    top:50%;
-    transform:translateY(-50%);
-    width:0;height:0;
-    border-left:7px solid transparent;
-    border-right:7px solid transparent;
-    border-top:9px solid var(--field-border);
-    pointer-events:none;
+    content:"";position:absolute;right:14px;top:50%;transform:translateY(-50%);
+    width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--field-border);pointer-events:none
   }
 
-  textarea{
-    width:100%;
-    min-height:110px;
-    resize:vertical;
-    background:var(--field-fill);
-    border:2px solid var(--field-border);
-    border-radius:14px;
-    padding:12px 14px;
-    color:var(--ink);
-    font-size:16px;
-    line-height:1.35;
-  }
-  textarea:focus{
-    outline:3px solid #87c7b2;
-    outline-offset:2px;
-  }
+  textarea{width:100%;min-height:110px;resize:vertical;background:var(--field-fill);border:2px solid var(--field-border);
+           border-radius:14px;padding:12px 14px;color:var(--ink);font-size:16px;line-height:1.35}
+  textarea:focus{outline:3px solid #87c7b2;outline-offset:2px}
 
-  .row{display:flex;gap:24px}
-  .col{flex:1}
+  h3{margin:26px 0 12px;font-size:20px;font-weight:800}
 
-  h3{
-    margin:26px 0 12px;
-    font-size:20px;
-    font-weight:800;
-  }
+  .preview-card{background:#fff;border:2px solid #e6e6e6;border-radius:14px;padding:14px}
+  .preview-img{width:100%;height:auto;display:block;border-radius:10px}
 
-  .preview-card{
-    background:#fff;
-    border:2px solid #e6e6e6;
-    border-radius:14px;
-    padding:14px;
-  }
-  .preview-img{
-    width:100%;
-    height:auto;
-    display:block;
-    border-radius:10px;
-  }
+  .actions{display:flex;gap:10px;align-items:center;margin-top:14px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;min-height:44px;background:#0a7d57;color:#fff;border:0;border-radius:999px;font-weight:800;cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .out{flex:1;min-height:44px;padding:10px 12px;border:2px dashed #97b6ab;border-radius:10px;color:#335047;background:#f5fbf8}
 
-  .actions{
-    display:flex; gap:10px; align-items:center; margin-top:14px;
-  }
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center;
-    padding:10px 14px; min-height:44px;
-    background:#0a7d57; color:#fff; border:0; border-radius:999px;
-    font-weight:800; cursor:pointer;
-  }
-  .btn:active{ transform:translateY(1px); }
-  .out{ flex:1; min-height:44px; padding:10px 12px; border:2px dashed #97b6ab; border-radius:10px; color:#335047; background:#f5fbf8 }
-
-  footer{
-    text-align:center; margin-top:22px;
-  }
-  .chip{
-    display:inline-block; padding:.5rem 1rem; border-radius:999px;
-    background:#c7eadc; color:#0b3f2e; font-weight:800;
-  }
+  footer{text-align:center;margin-top:22px}
+  .chip{display:inline-block;padding:.5rem 1rem;border-radius:999px;background:#c7eadc;color:#0b3f2e;font-weight:800}
 </style>
 </head>
 <body>
@@ -189,20 +77,16 @@
 
     <div class="card">
       <div class="grid">
-
-        <!-- dog name / owner name -->
-        <div class="col">
+        <div>
           <div class="label">DOG’S NAME</div>
           <div class="field"><input id="dogName" type="text" placeholder="Type name"></div>
         </div>
-
-        <div class="col">
+        <div>
           <div class="label">OWNER’S NAME</div>
           <div class="field"><input id="ownerName" type="text" placeholder="Type owner’s name"></div>
         </div>
 
-        <!-- base color with subnote + paw color -->
-        <div class="col">
+        <div>
           <div class="label">BASE COLOR <span class="subnote">(where the paw will be printed on)</span></div>
           <div class="field select-wrap">
             <select id="baseColor">
@@ -215,8 +99,7 @@
             </select>
           </div>
         </div>
-
-        <div class="col">
+        <div>
           <div class="label">PAW COLOR</div>
           <div class="field select-wrap">
             <select id="pawColor">
@@ -230,13 +113,11 @@
           </div>
         </div>
 
-        <!-- owner phone / back color -->
-        <div class="col">
+        <div>
           <div class="label">OWNER PHONE</div>
           <div class="field"><input id="ownerPhone" type="text" placeholder="Type phone"></div>
         </div>
-
-        <div class="col">
+        <div>
           <div class="label">DOG NAME COLOR (BACK)</div>
           <div class="field select-wrap">
             <select id="backColor">
@@ -250,13 +131,11 @@
           </div>
         </div>
 
-        <!-- chip / size -->
-        <div class="col">
+        <div>
           <div class="label">CHIP NUMBER (OPTIONAL)</div>
           <div class="field"><input id="chip" type="text" placeholder="Type chip #"></div>
         </div>
-
-        <div class="col">
+        <div>
           <div class="label">SIZE</div>
           <div class="field select-wrap">
             <select id="size">
@@ -268,8 +147,7 @@
           </div>
         </div>
 
-        <!-- letter type / notes -->
-        <div class="col">
+        <div>
           <div class="label">LETTER TYPE</div>
           <div class="field select-wrap">
             <select id="letterType">
@@ -279,8 +157,7 @@
             </select>
           </div>
         </div>
-
-        <div class="col">
+        <div>
           <div class="label">NOTES</div>
           <textarea id="notes" placeholder="Type any special requests here…"></textarea>
         </div>
@@ -288,8 +165,7 @@
 
       <h3>Selected letter type preview</h3>
       <div class="preview-card">
-        <!-- Put the PNG we made in this folder with this exact name -->
-        <img class="preview-img" src="lettertype_preview_WHITE_DONE.png" alt="Letter type examples: Srisakdi vs Apple Symbols">
+        <img class="preview-img" src="lettertype_preview_WHITE_DONE.png" alt="Letter type examples: Srisakdi (script) and Apple Symbols (sans)">
       </div>
 
       <div class="actions">
@@ -298,13 +174,10 @@
       </div>
     </div>
 
-    <footer>
-      <div class="chip">3Dcrafteddesigns</div>
-    </footer>
+    <footer><div class="chip">3Dcrafteddesigns</div></footer>
   </div>
 
 <script>
-  // Build a shareable, read-only summary in the hash of a URL under /request
   function makeLink(){
     const data = {
       dogName: document.getElementById('dogName').value.trim(),
@@ -319,20 +192,16 @@
       notes: document.getElementById('notes').value.trim()
     };
     const json = encodeURIComponent(JSON.stringify(data));
-    // Link target page (static) – create /request/index.html that reads location.hash and prints it.
     const url = location.origin + location.pathname.replace(/\/requestlink\/?$/,"/request/") + "#data=" + json;
     document.getElementById('out').value = url;
   }
-
   document.getElementById('mk').addEventListener('click', makeLink);
 
-  // Keyboard tip: Cmd+Shift+0 (Mac) / Ctrl+Shift+0 (Win) also creates the link
   window.addEventListener('keydown', (e)=>{
     const isMac = navigator.platform.toUpperCase().includes('MAC');
     if ((isMac && e.metaKey && e.shiftKey && e.key === '0') ||
         (!isMac && e.ctrlKey && e.shiftKey && e.key === '0')) {
-      e.preventDefault();
-      makeLink();
+      e.preventDefault(); makeLink();
     }
   });
 </script>

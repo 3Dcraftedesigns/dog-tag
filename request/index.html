@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dog Tag — Order summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eaf7f1; --card:#ffffff; --ink:#0b3f2e; --muted:#3e6b5b;
+    --border:#cfe6dc; --pill:#c7eadc; --accent:#0a7d57;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  }
+  .wrap{max-width:860px; margin:28px auto 56px; padding:0 16px}
+  h1{margin:0 0 8px; font-size:clamp(28px,5vw,42px); line-height:1.05; font-weight:800; text-align:center}
+  .lead{margin:0 0 18px; text-align:center; color:var(--muted); font-weight:600}
+  .card{background:var(--card); border:2px solid var(--border); border-radius:16px; padding:18px}
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:12px 18px}
+  @media (max-width:720px){ .row{grid-template-columns:1fr} }
+  .item{border:2px solid var(--border); border-radius:12px; padding:12px 14px; background:#fff}
+  .label{font-size:12px; font-weight:800; letter-spacing:.3px; color:var(--muted); text-transform:uppercase}
+  .value{margin-top:6px; font-size:18px; font-weight:600; word-break:break-word}
+  .pill{display:inline-block; background:var(--pill); color:var(--ink); font-weight:800; border-radius:999px; padding:.4rem .8rem}
+  .actions{display:flex; gap:10px; align-items:center; margin-top:14px; flex-wrap:wrap}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
+       padding:10px 14px; min-height:44px; background:var(--accent); color:#fff;
+       border:0; border-radius:999px; font-weight:800; cursor:pointer}
+  .btn:active{transform:translateY(1px)}
+  .out{flex:1; min-width:240px; min-height:44px; padding:10px 12px; border:2px dashed var(--border);
+       border-radius:10px; color:#335047; background:#f5fbf8}
+  .empty{background:#fff; border:2px dashed var(--border); border-radius:14px; padding:16px}
+  footer{text-align:center; margin-top:22px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Order summary</h1>
+    <p class="lead">Read-only view generated from the link.</p>
+
+    <div id="content"></div>
+
+    <footer><div class="pill">3Dcrafteddesigns</div></footer>
+  </div>
+
+<script>
+(function(){
+  function getDataFromHash(){
+    const m = location.hash.match(/[#&]data=([^&]+)/);
+    if(!m) return null;
+    try { return JSON.parse(decodeURIComponent(m[1])); }
+    catch(e){ return null; }
+  }
+  function asText(v){ return (v && String(v).trim()) ? String(v).trim() : "—"; }
+
+  function render(data){
+    const c = document.getElementById('content');
+    c.innerHTML = "";
+
+    if(!data){
+      c.innerHTML = `
+        <div class="empty">
+          <strong>No data found.</strong><br>
+          This page expects a URL like:<br>
+          <code>/dog-tag/request/#data={...}</code><br><br>
+          Go back to the order form and press <em>Create shareable link</em>.
+        </div>`;
+      return;
+    }
+
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="row">
+        <div class="item"><div class="label">Dog’s name</div><div class="value">${asText(data.dogName)}</div></div>
+        <div class="item"><div class="label">Owner’s name</div><div class="value">${asText(data.ownerName)}</div></div>
+
+        <div class="item"><div class="label">Owner phone</div><div class="value">${asText(data.ownerPhone)}</div></div>
+        <div class="item"><div class="label">Chip number</div><div class="value">${asText(data.chip)}</div></div>
+
+        <div class="item"><div class="label">Size</div><div class="value">${asText(data.size)}</div></div>
+        <div class="item"><div class="label">Letter type</div><div class="value">${asText(data.letterType)}</div></div>
+
+        <div class="item"><div class="label">Base color (where the paw will be printed on)</div><div class="value">${asText(data.baseColor)}</div></div>
+        <div class="item"><div class="label">Paw color</div><div class="value">${asText(data.pawColor)}</div></div>
+
+        <div class="item"><div class="label">Dog name color (back)</div><div class="value">${asText(data.backColor)}</div></div>
+        <div class="item" style="grid-column:1/-1"><div class="label">Notes</div><div class="value">${asText(data.notes)}</div></div>
+      </div>
+
+      <div class="actions">
+        <button id="copySummary" class="btn">Copy summary</button>
+        <input id="summaryOut" class="out" type="text" readonly />
+      </div>
+    `;
+    c.appendChild(card);
+
+    const summary = [
+      `Dog: ${asText(data.dogName)}`,
+      `Owner: ${asText(data.ownerName)}`,
+      `Phone: ${asText(data.ownerPhone)}`,
+      `Chip: ${asText(data.chip)}`,
+      `Size: ${asText(data.size)}`,
+      `Base: ${asText(data.baseColor)}`,
+      `Paw: ${asText(data.pawColor)}`,
+      `Back text color: ${asText(data.backColor)}`,
+      `Font: ${asText(data.letterType)}`,
+      `Notes: ${asText(data.notes)}`
+    ].join(" • ");
+
+    const out = document.getElementById('summaryOut');
+    out.value = summary;
+
+    document.getElementById('copySummary').addEventListener('click', async ()=>{
+      try{
+        await navigator.clipboard.writeText(out.value);
+        const btn = document.getElementById('copySummary');
+        const old = btn.textContent; btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent = old, 900);
+      }catch(e){
+        out.select(); document.execCommand('copy');
+      }
+    });
+  }
+
+  render(getDataFromHash());
+})();
+</script>
+</body>
+</html>

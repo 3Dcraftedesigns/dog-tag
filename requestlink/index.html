@@ -29,7 +29,7 @@
   .label{
     font-weight:800;letter-spacing:.3px;font-size:18px;margin:0 0 8px;
     display:flex;flex-direction:column;justify-content:flex-end;
-    min-height:64px; /* ← big enough for long titles + subnote */
+    min-height:64px;
   }
   @media (max-width:760px){ .label{min-height:unset} }
 
@@ -76,20 +76,20 @@
     <p class="lead2">Please fill this form so I can make it exactly right!</p>
 
     <div class="card">
-      <div class="grid">
+      <div class="grid" id="orderGrid">
         <div>
           <div class="label">DOG’S NAME</div>
-          <div class="field"><input id="dogName" type="text" placeholder="Type name"></div>
+          <div class="field"><input id="dogName" type="text" autocomplete="off" placeholder="Type name"></div>
         </div>
         <div>
           <div class="label">OWNER’S NAME</div>
-          <div class="field"><input id="ownerName" type="text" placeholder="Type owner’s name"></div>
+          <div class="field"><input id="ownerName" type="text" autocomplete="off" placeholder="Type owner’s name"></div>
         </div>
 
         <div>
           <div class="label">BASE COLOR <span class="subnote">(where the paw will be printed on)</span></div>
           <div class="field select-wrap">
-            <select id="baseColor">
+            <select id="baseColor" autocomplete="off">
               <option value="" selected>Select color</option>
               <option>Pink</option><option>Beige</option><option>Light Brown</option>
               <option>Purple</option><option>Blue</option><option>Brown</option>
@@ -102,7 +102,7 @@
         <div>
           <div class="label">PAW COLOR</div>
           <div class="field select-wrap">
-            <select id="pawColor">
+            <select id="pawColor" autocomplete="off">
               <option value="" selected>Select color</option>
               <option>Pink</option><option>Beige</option><option>Light Brown</option>
               <option>Purple</option><option>Blue</option><option>Brown</option>
@@ -115,12 +115,12 @@
 
         <div>
           <div class="label">OWNER PHONE</div>
-          <div class="field"><input id="ownerPhone" type="text" placeholder="Type phone"></div>
+          <div class="field"><input id="ownerPhone" type="text" autocomplete="off" placeholder="Type phone"></div>
         </div>
         <div>
           <div class="label">DOG NAME COLOR (BACK)</div>
           <div class="field select-wrap">
-            <select id="backColor">
+            <select id="backColor" autocomplete="off">
               <option value="" selected>Select color</option>
               <option>Pink</option><option>Beige</option><option>Light Brown</option>
               <option>Purple</option><option>Blue</option><option>Brown</option>
@@ -133,12 +133,12 @@
 
         <div>
           <div class="label">CHIP NUMBER (OPTIONAL)</div>
-          <div class="field"><input id="chip" type="text" placeholder="Type chip #"></div>
+          <div class="field"><input id="chip" type="text" autocomplete="off" placeholder="Type chip #"></div>
         </div>
         <div>
           <div class="label">SIZE</div>
           <div class="field select-wrap">
-            <select id="size">
+            <select id="size" autocomplete="off">
               <option value="" selected>Select size</option>
               <option>Small — 29 × 29.4 mm</option>
               <option>Medium — 34.5 × 35 mm</option>
@@ -150,7 +150,7 @@
         <div>
           <div class="label">LETTER TYPE</div>
           <div class="field select-wrap">
-            <select id="letterType">
+            <select id="letterType" autocomplete="off">
               <option value="" selected>Select style</option>
               <option>Srisakdi (script)</option>
               <option>Apple Symbols (sans)</option>
@@ -159,7 +159,7 @@
         </div>
         <div>
           <div class="label">NOTES</div>
-          <textarea id="notes" placeholder="Type any special requests here…"></textarea>
+          <textarea id="notes" autocomplete="off" placeholder="Type any special requests here…"></textarea>
         </div>
       </div>
 
@@ -178,6 +178,16 @@
   </div>
 
 <script>
+  // Clear everything on load and when returning via back/forward cache.
+  function clearAllFields(){
+    document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+    document.querySelectorAll('textarea').forEach(el => el.value = '');
+    document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
+    document.getElementById('out').value = '';
+  }
+  window.addEventListener('load', clearAllFields);
+  window.addEventListener('pageshow', (e)=>{ if (e.persisted) clearAllFields(); });
+
   function makeLink(){
     const data = {
       dogName: document.getElementById('dogName').value.trim(),
@@ -197,6 +207,7 @@
   }
   document.getElementById('mk').addEventListener('click', makeLink);
 
+  // Keyboard shortcut: Cmd+Shift+0 (Mac) / Ctrl+Shift+0 (Windows)
   window.addEventListener('keydown', (e)=>{
     const isMac = navigator.platform.toUpperCase().includes('MAC');
     if ((isMac && e.metaKey && e.shiftKey && e.key === '0') ||

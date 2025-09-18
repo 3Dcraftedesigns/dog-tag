@@ -3,244 +3,111 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Dog Tag — Order details</title>
+<title>Dog Tag — Order summary</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#eaf7f1; --card:#e3f3eb; --ink:#0b3f2e; --ink-soft:#284f43;
-    --field-border:#4b8a77; --field-fill:#dff1ea; --radius:16px;
+    --field-border:#4b8a77; --radius:16px;
   }
   *{box-sizing:border-box}
   html,body{margin:0}
   body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
-  .wrap{max-width:980px;margin:28px auto 56px;padding:0 16px}
-  h1{margin:0 0 12px;font-size:clamp(28px,5vw,48px);line-height:1.05;text-align:center;font-weight:800}
-  .lead,.lead2{text-align:center;margin:0;color:var(--ink-soft);font-weight:500}
-  .lead2{margin-top:4px}
-
-  .card{margin-top:18px;background:var(--card);border:2px solid #a5cfbf40;border-radius:var(--radius);padding:20px}
-
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px}
-  @media (max-width:760px){.grid{grid-template-columns:1fr}}
-
-  .label{
-    font-weight:800;letter-spacing:.3px;font-size:18px;margin:0 0 8px;
-    display:flex;flex-direction:column;justify-content:flex-end;
-    min-height:64px;
-  }
-  @media (max-width:760px){ .label{min-height:unset} }
-  .subnote{display:block;margin-top:2px;font-size:12px;color:var(--ink-soft);font-weight:600;line-height:1.1}
-
-  .field{display:flex;align-items:center;min-height:56px;padding:0 14px;background:var(--field-fill);
-         border:2px solid var(--field-border);border-radius:14px}
-  .field:focus-within{outline:3px solid #87c7b2;outline-offset:2px}
-
-  input[type="text"],select{
-    flex:1;height:40px;line-height:40px;background:transparent;border:0;padding:0;margin:0;
-    font-size:17px;color:var(--ink);appearance:none;-webkit-appearance:none;outline:none
-  }
-  ::placeholder{color:#6c8e83}
-
-  .select-wrap{position:relative}
-  .select-wrap::after{
-    content:"";position:absolute;right:14px;top:50%;transform:translateY(-50%);
-    width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--field-border);pointer-events:none
-  }
-
-  textarea{width:100%;min-height:110px;resize:vertical;background:var(--field-fill);border:2px solid var(--field-border);
-           border-radius:14px;padding:12px 14px;color:var(--ink);font-size:16px;line-height:1.35}
-  textarea:focus{outline:3px solid #87c7b2;outline-offset:2px}
-
-  h3{margin:26px 0 12px;font-size:20px;font-weight:800}
-
-  .preview-card{background:#fff;border:2px solid #e6e6e6;border-radius:14px;padding:14px}
-  .preview-img{width:100%;height:auto;display:block;border-radius:10px}
-
-  .actions{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
+  .wrap{max-width:900px;margin:28px auto 56px;padding:0 16px}
+  h1{margin:0 0 10px;font-size:clamp(28px,5vw,44px);line-height:1.05;text-align:center;font-weight:800}
+  .lead{text-align:center;margin:0 0 16px;color:var(--ink-soft);font-weight:500}
+  .card{background:var(--card);border:2px solid #a5cfbf40;border-radius:var(--radius);padding:18px}
+  .row{display:grid;grid-template-columns:220px 1fr;gap:8px 14px;align-items:start;border-bottom:1px dashed #c7e2d7;padding:10px 0}
+  .row:last-child{border-bottom:0}
+  .label{font-weight:800;color:var(--ink-soft)}
+  .value{font-weight:700}
+  .actions{display:flex;gap:10px;align-items:center;margin:16px 0 0}
   .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;min-height:44px;background:#0a7d57;color:#fff;border:0;border-radius:999px;font-weight:800;cursor:pointer}
   .btn:active{transform:translateY(1px)}
-  .btn.secondary{background:#116b52}
   .out{flex:1;min-width:260px;min-height:44px;padding:10px 12px;border:2px dashed #97b6ab;border-radius:10px;color:#335047;background:#f5fbf8}
-
+  .warn{background:#fff8e6;border:2px solid #f1d08b;color:#735b19;border-radius:12px;padding:12px;margin-top:12px}
   footer{text-align:center;margin-top:22px}
   .chip{display:inline-block;padding:.5rem 1rem;border-radius:999px;background:#c7eadc;color:#0b3f2e;font-weight:800}
 </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Welcome!</h1>
-    <p class="lead">Thank you for ordering your custom NFC dog tag!</p>
-    <p class="lead2">Please fill this form so I can make it exactly right.</p>
+    <h1>Order summary</h1>
+    <p class="lead">Read-only view of the customer’s selections.</p>
 
-    <div class="card">
-      <div class="grid" id="orderGrid">
-        <div>
-          <div class="label">DOG’S NAME</div>
-          <div class="field"><input id="dogName" type="text" autocomplete="off" placeholder="Type name"></div>
-        </div>
-        <div>
-          <div class="label">OWNER’S NAME</div>
-          <div class="field"><input id="ownerName" type="text" autocomplete="off" placeholder="Type owner’s name"></div>
-        </div>
+    <div id="content" class="card"></div>
 
-        <div>
-          <div class="label">BASE COLOR <span class="subnote">(where the paw will be printed on)</span></div>
-          <div class="field select-wrap">
-            <select id="baseColor" autocomplete="off">
-              <option value="" selected>Select color</option>
-              <option>Pink</option><option>Beige</option><option>Light Brown</option>
-              <option>Purple</option><option>Blue</option><option>Brown</option>
-              <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
-              <option>Matte Black</option><option>Black</option>
-              <option>Matte White</option><option>White</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <div class="label">PAW COLOR</div>
-          <div class="field select-wrap">
-            <select id="pawColor" autocomplete="off">
-              <option value="" selected>Select color</option>
-              <option>Pink</option><option>Beige</option><option>Light Brown</option>
-              <option>Purple</option><option>Blue</option><option>Brown</option>
-              <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
-              <option>Matte Black</option><option>Black</option>
-              <option>Matte White</option><option>White</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <div class="label">OWNER PHONE</div>
-          <div class="field"><input id="ownerPhone" type="text" autocomplete="off" placeholder="Type phone"></div>
-        </div>
-        <div>
-          <div class="label">DOG NAME COLOR (BACK)</div>
-          <div class="field select-wrap">
-            <select id="backColor" autocomplete="off">
-              <option value="" selected>Select color</option>
-              <option>Pink</option><option>Beige</option><option>Light Brown</option>
-              <option>Purple</option><option>Blue</option><option>Brown</option>
-              <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
-              <option>Matte Black</option><option>Black</option>
-              <option>Matte White</option><option>White</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <div class="label">CHIP NUMBER (OPTIONAL)</div>
-          <div class="field"><input id="chip" type="text" autocomplete="off" placeholder="Type chip #"></div>
-        </div>
-        <div>
-          <div class="label">SIZE</div>
-          <div class="field select-wrap">
-            <select id="size" autocomplete="off">
-              <option value="" selected>Select size</option>
-              <option>Small — 29 × 29.4 mm</option>
-              <option>Medium — 34.5 × 35 mm</option>
-              <option>Big — 38 × 38.5 mm</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <div class="label">LETTER TYPE</div>
-          <div class="field select-wrap">
-            <select id="letterType" autocomplete="off">
-              <option value="" selected>Select style</option>
-              <option>Srisakdi (script)</option>
-              <option>Apple Symbols (sans)</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <div class="label">NOTES</div>
-          <textarea id="notes" autocomplete="off" placeholder="Type any special requests here…"></textarea>
-        </div>
-      </div>
-
-      <h3>Letter type previews</h3>
-      <div class="preview-card">
-        <img class="preview-img" src="lettertype_preview_WHITE_DONE.png" alt="Letter type examples: Srisakdi (script) and Apple Symbols (sans)">
-      </div>
-
-      <div class="actions">
-        <button id="mk" class="btn">Create shareable link</button>
-        <button id="copy" class="btn secondary" style="display:none;">Copy link</button>
-        <input id="out" class="out" type="text" readonly placeholder="Your link will appear here…">
-      </div>
+    <div class="actions">
+      <button id="copy" class="btn">Copy page link</button>
+      <input id="link" class="out" type="text" readonly>
     </div>
+
+    <div id="msg" class="warn" style="display:none"></div>
 
     <footer><div class="chip">3Dcrafteddesigns</div></footer>
   </div>
 
 <script>
-  // Clear everything on load and when returning via back/forward cache.
-  function clearAllFields(){
-    document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
-    document.querySelectorAll('textarea').forEach(el => el.value = '');
-    document.querySelectorAll('select').forEach(el => el.selectedIndex = 0);
-    document.getElementById('out').value = '';
-    document.getElementById('copy').style.display = 'none';
-  }
-  window.addEventListener('load', clearAllFields);
-  window.addEventListener('pageshow', (e)=>{ if (e.persisted) clearAllFields(); });
-
-  const out = document.getElementById('out');
-  const copyBtn = document.getElementById('copy');
-
-  function makeLink(){
-    const data = {
-      dogName: document.getElementById('dogName').value.trim(),
-      ownerName: document.getElementById('ownerName').value.trim(),
-      ownerPhone: document.getElementById('ownerPhone').value.trim(),
-      chip: document.getElementById('chip').value.trim(),
-      size: document.getElementById('size').value,
-      baseColor: document.getElementById('baseColor').value,
-      pawColor: document.getElementById('pawColor').value,
-      backColor: document.getElementById('backColor').value,
-      letterType: document.getElementById('letterType').value,
-      notes: document.getElementById('notes').value.trim()
-    };
-    const json = encodeURIComponent(JSON.stringify(data));
-    const url = location.origin + location.pathname.replace(/\/requestlink\/?$/,"/request/") + "#data=" + json;
-    out.value = url;
-
-    // reveal copy button
-    copyBtn.style.display = 'inline-flex';
-    copyBtn.disabled = false;
-    copyBtn.textContent = 'Copy link';
+  // helper to read #data=...
+  function readDataFromHash(){
+    const m = location.hash.match(/#data=(.*)$/);
+    if(!m) return null;
+    try{
+      return JSON.parse(decodeURIComponent(m[1]));
+    }catch(e){ return null; }
   }
 
-  document.getElementById('mk').addEventListener('click', makeLink);
-
-  // Copy link handler (Clipboard API + fallback)
-  async function copyLink(){
-    const txt = out.value;
-    if(!txt) return;
-    try {
-      await navigator.clipboard.writeText(txt);
-    } catch {
-      out.focus(); out.select();
-      document.execCommand('copy');
-      out.setSelectionRange(0, 0); // remove selection
+  function renderSummary(d){
+    const el = document.getElementById('content');
+    if(!d){
+      el.innerHTML = '<div class="warn">No data found in the link. Make sure the URL contains <code>#data=...</code>.</div>';
+      return;
     }
-    copyBtn.textContent = 'Copied!';
-    setTimeout(()=> copyBtn.textContent = 'Copy link', 1200);
+    const rows = [
+      ['Dog’s name', d.dogName || '—'],
+      ['Owner’s name', d.ownerName || '—'],
+      ['Owner phone', d.ownerPhone || '—'],
+      ['Chip number', d.chip || '—'],
+      ['Size', d.size || '—'],
+      ['Base color (paw printed on)', d.baseColor || '—'],
+      ['Paw color', d.pawColor || '—'],
+      ['Dog name color (back)', d.backColor || '—'],
+      ['Letter type', d.letterType || '—'],
+      ['Notes', d.notes || '—'],
+    ];
+    el.innerHTML = rows.map(([k,v])=>(
+      `<div class="row"><div class="label">${k}</div><div class="value">${escapeHtml(v)}</div></div>`
+    )).join('');
   }
-  copyBtn.addEventListener('click', copyLink);
 
-  // Keyboard shortcut: Cmd+Shift+0 (Mac) / Ctrl+Shift+0 (Windows)
-  window.addEventListener('keydown', (e)=>{
-    const isMac = navigator.platform.toUpperCase().includes('MAC');
-    if ((isMac && e.metaKey && e.shiftKey && e.key === '0') ||
-        (!isMac && e.ctrlKey && e.shiftKey && e.key === '0')) {
-      e.preventDefault(); makeLink();
+  function escapeHtml(s){
+    return String(s).replace(/[&<>"]/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+  }
+
+  // copy link UI
+  const linkBox = document.getElementById('link');
+  linkBox.value = location.href;
+
+  document.getElementById('copy').addEventListener('click', async ()=>{
+    try{
+      await navigator.clipboard.writeText(location.href);
+      flash('Copied link to clipboard ✅');
+    }catch{
+      linkBox.focus(); linkBox.select(); document.execCommand('copy');
+      flash('Copied link to clipboard ✅');
     }
   });
+
+  function flash(txt){
+    const m = document.getElementById('msg');
+    m.textContent = txt; m.style.display = 'block';
+    setTimeout(()=>{ m.style.display = 'none'; }, 1400);
+  }
+
+  // render
+  renderSummary(readDataFromHash());
 </script>
 </body>
 </html>

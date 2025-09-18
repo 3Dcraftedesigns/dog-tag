@@ -25,7 +25,6 @@
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px}
   @media (max-width:760px){.grid{grid-template-columns:1fr}}
 
-  /* LABELS — fixed height on desktop so rows align */
   .label{
     font-weight:800;letter-spacing:.3px;font-size:18px;margin:0 0 8px;
     display:flex;flex-direction:column;justify-content:flex-end;
@@ -39,12 +38,10 @@
          border:2px solid var(--field-border);border-radius:14px}
   .field:focus-within{outline:3px solid #87c7b2;outline-offset:2px}
 
-  input[type="text"],select,textarea{
-    width:100%;
-    background:transparent;border:0;padding:0;margin:0;outline:none;
-    font-size:17px;color:var(--ink);appearance:none;-webkit-appearance:none
+  input[type="text"],select{
+    flex:1;height:40px;line-height:40px;background:transparent;border:0;padding:0;margin:0;
+    font-size:17px;color:var(--ink);appearance:none;-webkit-appearance:none;outline:none
   }
-  input[type="text"],select{height:40px;line-height:40px}
   ::placeholder{color:#6c8e83}
 
   .select-wrap{position:relative}
@@ -53,7 +50,9 @@
     width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid var(--field-border);pointer-events:none
   }
 
-  textarea{min-height:110px;resize:vertical;padding:12px 14px}
+  textarea{width:100%;min-height:110px;resize:vertical;background:var(--field-fill);border:2px solid var(--field-border);
+           border-radius:14px;padding:12px 14px;color:var(--ink);font-size:16px;line-height:1.35}
+  textarea:focus{outline:3px solid #87c7b2;outline-offset:2px}
 
   h3{margin:26px 0 12px;font-size:20px;font-weight:800}
 
@@ -63,8 +62,8 @@
   .actions{display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap}
   .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 14px;min-height:44px;background:#0a7d57;color:#fff;border:0;border-radius:999px;font-weight:800;cursor:pointer}
   .btn:active{transform:translateY(1px)}
-  .btn.secondary{background:#0c5c43}
-  .out{flex:1;min-width:260px;min-height:44px;padding:10px 12px;border:2px dashed #97b6ab;border-radius:10px;color:#335047;background:#f5fbf8}
+  .out{flex:1;min-height:44px;padding:10px 12px;border:2px dashed #97b6ab;border-radius:10px;color:#335047;background:#f5fbf8}
+  .copyBtn{display:none}
 
   footer{text-align:center;margin-top:22px}
   .chip{display:inline-block;padding:.5rem 1rem;border-radius:999px;background:#c7eadc;color:#0b3f2e;font-weight:800}
@@ -77,96 +76,92 @@
     <p class="lead2">Please fill this form so I can make it exactly right!</p>
 
     <div class="card">
-      <form id="form" autocomplete="off">
-        <div class="grid">
-          <div>
-            <div class="label">DOG’S NAME</div>
-            <div class="field"><input id="dogName" name="dogName" type="text" placeholder="Type name"></div>
-          </div>
-          <div>
-            <div class="label">OWNER’S NAME</div>
-            <div class="field"><input id="ownerName" name="ownerName" type="text" placeholder="Type owner’s name"></div>
-          </div>
+      <div class="grid">
+        <div>
+          <div class="label">DOG’S NAME</div>
+          <div class="field"><input id="dogName" type="text" placeholder="Type name"></div>
+        </div>
+        <div>
+          <div class="label">OWNER’S NAME</div>
+          <div class="field"><input id="ownerName" type="text" placeholder="Type owner’s name"></div>
+        </div>
 
-          <div>
-            <div class="label">BASE COLOR <span class="subnote">(where the paw will be printed on)</span></div>
-            <div class="field select-wrap">
-              <select id="baseColor" name="baseColor">
-                <option value="" selected>Select color</option>
-                <option>Pink</option><option>Beige</option><option>Light Brown</option>
-                <option>Purple</option><option>Blue</option><option>Brown</option>
-                <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
-                <option>Matte Black</option><option>Black</option>
-                <option>Matte White</option><option>White</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <div class="label">PAW COLOR</div>
-            <div class="field select-wrap">
-              <select id="pawColor" name="pawColor">
-                <option value="" selected>Select color</option>
-                <option>Pink</option><option>Beige</option><option>Light Brown</option>
-                <option>Purple</option><option>Blue</option><option>Brown</option>
-                <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
-                <option>Matte Black</option><option>Black</option>
-                <option>Matte White</option><option>White</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <div class="label">OWNER PHONE</div>
-            <div class="field"><input id="ownerPhone" name="ownerPhone" type="text" placeholder="Type phone"></div>
-          </div>
-          <div>
-            <div class="label">DOG NAME COLOR (BACK)</div>
-            <div class="field select-wrap">
-              <select id="backColor" name="backColor">
-                <option value="" selected>Select color</option>
-                <option>Pink</option><option>Beige</option><option>Light Brown</option>
-                <option>Purple</option><option>Blue</option><option>Brown</option>
-                <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
-                <option>Matte Black</option><option>Black</option>
-                <option>Matte White</option><option>White</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <div class="label">CHIP NUMBER (OPTIONAL)</div>
-            <div class="field"><input id="chip" name="chip" type="text" placeholder="Type chip #"></div>
-          </div>
-          <div>
-            <div class="label">SIZE</div>
-            <div class="field select-wrap">
-              <select id="size" name="size">
-                <option value="" selected>Select size</option>
-                <option>Small — 29 × 29.4 mm</option>
-                <option>Medium — 34.5 × 35 mm</option>
-                <option>Big — 38 × 38.5 mm</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <div class="label">LETTER TYPE</div>
-            <div class="field select-wrap">
-              <select id="letterType" name="letterType">
-                <option value="" selected>Select style</option>
-                <option>Srisakdi (script)</option>
-                <option>Apple Symbols (sans)</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <div class="label">NOTES</div>
-            <div class="field" style="padding:0;">
-              <textarea id="notes" name="notes" placeholder="Type any special requests here…"></textarea>
-            </div>
+        <div>
+          <div class="label">BASE COLOR <span class="subnote">(where the paw will be printed on)</span></div>
+          <div class="field select-wrap">
+            <select id="baseColor">
+              <option value="" selected>Select color</option>
+              <option>Pink</option><option>Beige</option><option>Light Brown</option>
+              <option>Purple</option><option>Blue</option><option>Brown</option>
+              <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
+              <option>Matte Black</option><option>Black</option>
+              <option>Matte White</option><option>White</option>
+            </select>
           </div>
         </div>
-      </form>
+        <div>
+          <div class="label">PAW COLOR</div>
+          <div class="field select-wrap">
+            <select id="pawColor">
+              <option value="" selected>Select color</option>
+              <option>Pink</option><option>Beige</option><option>Light Brown</option>
+              <option>Purple</option><option>Blue</option><option>Brown</option>
+              <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
+              <option>Matte Black</option><option>Black</option>
+              <option>Matte White</option><option>White</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <div class="label">OWNER PHONE</div>
+          <div class="field"><input id="ownerPhone" type="text" placeholder="Type phone"></div>
+        </div>
+        <div>
+          <div class="label">DOG NAME COLOR (BACK)</div>
+          <div class="field select-wrap">
+            <select id="backColor">
+              <option value="" selected>Select color</option>
+              <option>Pink</option><option>Beige</option><option>Light Brown</option>
+              <option>Purple</option><option>Blue</option><option>Brown</option>
+              <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
+              <option>Matte Black</option><option>Black</option>
+              <option>Matte White</option><option>White</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <div class="label">CHIP NUMBER (OPTIONAL)</div>
+          <div class="field"><input id="chip" type="text" placeholder="Type chip #"></div>
+        </div>
+        <div>
+          <div class="label">SIZE</div>
+          <div class="field select-wrap">
+            <select id="size">
+              <option value="" selected>Select size</option>
+              <option>Small — 29 × 29.4 mm</option>
+              <option>Medium — 34.5 × 35 mm</option>
+              <option>Big — 38 × 38.5 mm</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <div class="label">LETTER TYPE</div>
+          <div class="field select-wrap">
+            <select id="letterType">
+              <option value="" selected>Select style</option>
+              <option>Srisakdi (script)</option>
+              <option>Apple Symbols (sans)</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <div class="label">NOTES</div>
+          <textarea id="notes" placeholder="Type any special requests here…"></textarea>
+        </div>
+      </div>
 
       <h3>Letter type previews</h3>
       <div class="preview-card">
@@ -175,7 +170,7 @@
 
       <div class="actions">
         <button id="mk" class="btn">Create shareable link</button>
-        <button id="copyBtn" class="btn secondary" style="display:none;">Copy link</button>
+        <button id="copyLink" class="btn copyBtn">Copy link</button>
         <input id="out" class="out" type="text" readonly placeholder="Your link will appear here…">
       </div>
     </div>
@@ -184,8 +179,32 @@
   </div>
 
 <script>
-  function collect(){
-    return {
+  // Always start clean after a reload (avoid auto-fill from some browsers)
+  window.addEventListener('pageshow', () => {
+    ['dogName','ownerName','ownerPhone','chip','notes'].forEach(id => {
+      const el = document.getElementById(id); if(el) el.value = '';
+    });
+    ['baseColor','pawColor','backColor','size','letterType'].forEach(id => {
+      const el = document.getElementById(id); if(el) el.selectedIndex = 0;
+    });
+    document.getElementById('out').value = '';
+    document.getElementById('copyLink').style.display = 'none';
+  });
+
+  function buildSummaryURL(data){
+    // Build a URL that points to /request/ (sibling to /requestlink/)
+    const here = new URL(window.location.href);
+    // Ensure trailing slash
+    let basePath = here.pathname.endsWith('/') ? here.pathname : (here.pathname + '/');
+    // Swap .../requestlink/ → .../request/
+    basePath = basePath.replace(/\/requestlink\/?$/i, '/request/');
+    const out = new URL(basePath, `${here.origin}`);
+    out.hash = 'data=' + encodeURIComponent(JSON.stringify(data));
+    return out.toString();
+  }
+
+  function makeLink(){
+    const data = {
       dogName: document.getElementById('dogName').value.trim(),
       ownerName: document.getElementById('ownerName').value.trim(),
       ownerPhone: document.getElementById('ownerPhone').value.trim(),
@@ -197,47 +216,30 @@
       letterType: document.getElementById('letterType').value,
       notes: document.getElementById('notes').value.trim()
     };
-  }
-
-  function makeLink(){
-    const json = encodeURIComponent(JSON.stringify(collect()));
-    const summaryUrl = location.origin + location.pathname.replace(/\/requestlink\/?$/,"/request/") + "#data=" + json;
+    const url = buildSummaryURL(data);
     const out = document.getElementById('out');
-    out.value = summaryUrl;
-    document.getElementById('copyBtn').style.display = 'inline-flex';
-  }
+    out.value = url;
 
-  async function copyOut(){
-    const out = document.getElementById('out');
-    if(!out.value) return;
-    try{
-      await navigator.clipboard.writeText(out.value);
-      const old = document.getElementById('copyBtn').textContent;
-      document.getElementById('copyBtn').textContent = 'Copied!';
-      setTimeout(()=>document.getElementById('copyBtn').textContent = old, 900);
-    }catch(e){
-      out.select(); document.execCommand('copy');
-    }
+    const btn = document.getElementById('copyLink');
+    btn.style.display = 'inline-flex';
+    btn.onclick = async () => {
+      try{
+        await navigator.clipboard.writeText(url);
+        const old = btn.textContent; btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent=old, 900);
+      }catch(e){
+        out.select(); document.execCommand('copy');
+      }
+    };
   }
 
   document.getElementById('mk').addEventListener('click', makeLink);
-  document.getElementById('copyBtn').addEventListener('click', copyOut);
 
-  // make Cmd/Ctrl+Shift+0 a shortcut to build link
+  // Keyboard shortcut: Cmd/Ctrl+Shift+0 to create link
   window.addEventListener('keydown', (e)=>{
     const isMac = navigator.platform.toUpperCase().includes('MAC');
     if ((isMac && e.metaKey && e.shiftKey && e.key === '0') ||
         (!isMac && e.ctrlKey && e.shiftKey && e.key === '0')) {
       e.preventDefault(); makeLink();
-    }
-  });
-
-  // ensure a “fresh” form on reload
-  window.addEventListener('pageshow', (ev)=>{
-    if (ev.persisted) {
-      document.getElementById('form').reset();
-      document.getElementById('out').value = "";
-      document.getElementById('copyBtn').style.display = 'none';
     }
   });
 </script>

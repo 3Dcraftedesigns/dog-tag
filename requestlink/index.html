@@ -1,294 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dog Tag – Order Details</title>
-  <meta name="theme-color" content="#10b981" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
-    .field{ @apply block w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-400; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dog Tag – Order Details</title>
+<meta name="theme-color" content="#dff3ea" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --mint-50:#eef8f3;
+    --mint-100:#e6f5ef;
+    --mint-200:#dff3ea;
+    --mint-300:#cfece2;
+    --mint-500:#0f5132; /* headings */
+    --outline:#6aa18e;
+    --text:#0d2d20;
+    --muted:#5b7a6f;
+    --shadow: 0 1px 0 rgba(0,0,0,.03), 0 2px 8px rgba(0,0,0,.04);
+    --radius:14px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    color:var(--text);
+    background:linear-gradient(#e9f6f0,#e9f6f0) fixed;
+  }
+  .wrap{
+    max-width:920px;margin:28px auto 56px;padding:0 16px;
+  }
+  h1{
+    font-size:clamp(32px,4.8vw,48px);line-height:1.12;margin:0 0 8px;font-weight:800;
+    text-align:center;color:var(--mint-500);
+  }
+  .sub{
+    text-align:center;color:var(--muted);font-weight:600;margin:0 0 22px;
+  }
+  .card{
+    background:var(--mint-100);
+    border:2px solid var(--mint-300);
+    border-radius:22px;
+    box-shadow:var(--shadow);
+    padding:22px clamp(14px,2.5vw,24px) 26px;
+  }
+
+  /* grid */
+  .grid{display:grid;grid-template-columns:1fr;gap:18px 22px}
+  @media (min-width:760px){ .grid{grid-template-columns:1fr 1fr} }
+
+  label.head{
+    display:block;font-weight:800;color:var(--mint-500);letter-spacing:.3px;margin:2px 0 8px;
+  }
+  .subnote{
+    display:block;margin:-4px 0 10px;color:var(--muted);font-size:.9rem;font-weight:600;
+  }
+
+  /* input shells (match your red sketch) */
+  .box{
+    position:relative;background:var(--mint-50);
+    border:3px solid var(--outline);
+    border-radius:var(--radius);
+    padding:10px 14px;
+  }
+  input[type="text"], input[type="tel"], select, textarea{
+    width:100%;border:0;background:transparent;outline:none;color:var(--text);
+    font:600 16px/1.3 Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+  }
+  select{appearance:none;-webkit-appearance:none;-moz-appearance:none;padding-right:34px}
+  .chev{
+    pointer-events:none;position:absolute;right:10px;top:50%;transform:translateY(-50%);
+    width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;
+    border-top:12px solid var(--outline);opacity:.9;
+  }
+  textarea{min-height:112px;resize:vertical}
+
+  .sectionTitle{margin:26px 0 10px;font-weight:800;color:var(--mint-500)}
+  .previewPanel{
+    background:#fff;border:2px solid var(--mint-300);border-radius:18px;padding:12px;
+  }
+  .exampleCaption{margin:8px 0 0;text-align:center;color:#000;font-weight:700}
+
+  .row-span-2{grid-column:1/-1}
+  .btnRow{display:flex;gap:10px;align-items:center;margin-top:14px}
+  .btn{
+    border:0;border-radius:12px;background:#0ea36a;color:#fff;font-weight:800;
+    padding:12px 16px;cursor:pointer;box-shadow:var(--shadow);
+  }
+  .btn:active{transform:translateY(1px)}
+  .copyTarget{flex:1}
+  .footer{
+    text-align:center;margin:28px 0 -8px;
+  }
+  .pill{
+    display:inline-block;background:#cdeee1;color:#185b41;
+    padding:8px 14px;border-radius:999px;font-weight:800;
+  }
+
+  /* consistent label spacing above controls (matches your arrow note) */
+  .field{margin:0 0 8px}
+</style>
 </head>
-<body class="min-h-screen bg-emerald-50 text-slate-800">
-  <main class="mx-auto max-w-3xl px-4 sm:px-6 py-10">
+<body>
+  <div class="wrap">
+    <h1>Welcome!</h1>
+    <p class="sub">Thanks for ordering a custom NFC dog tag.<br/>Please fill this form so I can make it exactly right.</p>
 
-    <!-- Header -->
-    <header class="text-center mb-6">
-      <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-emerald-900">Welcome!</h1>
-      <p class="mt-3 text-slate-700">Thanks for ordering a custom NFC dog tag.<br/>Please fill this form so i can make it exactly right.</p>
-    </header>
-
-    <!-- Form card -->
-    <section id="formCard" class="rounded-2xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6">
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- Dog name -->
-        <div class="">
-          <label for="dogName" class="block text-sm font-semibold text-emerald-900">DOG’S NAME</label>
-          <input id="dogName" type="text" class="field mt-1" placeholder="Type name" />
+    <div class="card">
+      <div class="grid" id="formGrid">
+        <!-- Left column -->
+        <div class="field">
+          <label class="head" for="dogName">DOG’S NAME</label>
+          <div class="box"><input id="dogName" type="text" placeholder="Type name"></div>
         </div>
 
-        <!-- Base color -->
-        <div class="">
-          <label class="block text-sm font-semibold text-emerald-900">BASE COLOR
-            <span class="block text-xs font-normal text-slate-500">(where the paw will be printed on)</span>
-          </label>
-          <select id="baseColor" class="field mt-1">
-            <option value="" selected>Select color</option>
-            <option>Pink</option>
-            <option>Beige</option>
-            <option>Light Brown</option>
-            <option>Purple</option>
-            <option>Blue</option>
-            <option>Brown</option>
-            <option>Matte Green</option>
-            <option>Silver</option>
-            <option>Matte Pink</option>
-            <option>Matte Black</option>
-            <option>Black</option>
-            <option>Matte White</option>
-            <option>White</option>
-          </select>
+        <!-- Right column -->
+        <div class="field">
+          <label class="head" for="baseColor">BASE COLOR</label>
+          <span class="subnote">(where the paw will be printed on)</span>
+          <div class="box">
+            <select id="baseColor">
+              <option value="" selected>Select color</option>
+              <option>Pink</option><option>Beige</option><option>Light Brown</option>
+              <option>Purple</option><option>Blue</option><option>Brown</option>
+              <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
+              <option>Matte Black</option><option>Black</option><option>Matte White</option><option>White</option>
+            </select>
+            <span class="chev"></span>
+          </div>
         </div>
 
-        <!-- Owner phone -->
-        <div>
-          <label for="ownerPhone" class="block text-sm font-semibold text-emerald-900">OWNER PHONE</label>
-          <input id="ownerPhone" type="text" class="field mt-1" placeholder="Type phone" />
+        <div class="field">
+          <label class="head" for="ownerPhone">OWNER PHONE</label>
+          <div class="box"><input id="ownerPhone" type="tel" placeholder="Type phone"></div>
         </div>
 
-        <!-- Paw color -->
-        <div>
-          <label class="block text-sm font-semibold text-emerald-900">PAW COLOR</label>
-          <select id="pawColor" class="field mt-1">
-            <option value="" selected>Select color</option>
-            <option>Pink</option>
-            <option>Beige</option>
-            <option>Light Brown</option>
-            <option>Purple</option>
-            <option>Blue</option>
-            <option>Brown</option>
-            <option>Matte Green</option>
-            <option>Silver</option>
-            <option>Matte Pink</option>
-            <option>Matte Black</option>
-            <option>Black</option>
-            <option>Matte White</option>
-            <option>White</option>
-          </select>
+        <div class="field">
+          <label class="head" for="pawColor">PAW COLOR</label>
+          <div class="box">
+            <select id="pawColor">
+              <option value="" selected>Select color</option>
+              <option>Pink</option><option>Beige</option><option>Light Brown</option>
+              <option>Purple</option><option>Blue</option><option>Brown</option>
+              <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
+              <option>Matte Black</option><option>Black</option><option>Matte White</option><option>White</option>
+            </select>
+            <span class="chev"></span>
+          </div>
         </div>
 
-        <!-- Chip number -->
-        <div>
-          <label for="chipNumber" class="block text-sm font-semibold text-emerald-900">CHIP NUMBER (OPTIONAL)</label>
-          <input id="chipNumber" type="text" class="field mt-1" placeholder="Type chip #" />
+        <div class="field">
+          <label class="head" for="chip">CHIP NUMBER (OPTIONAL)</label>
+          <div class="box"><input id="chip" type="text" placeholder="Type chip #"></div>
         </div>
 
-        <!-- Back color -->
-        <div>
-          <label class="block text-sm font-semibold text-emerald-900">DOG NAME COLOR (BACK)</label>
-          <select id="backColor" class="field mt-1">
-            <option value="" selected>Select color</option>
-            <option>Pink</option>
-            <option>Beige</option>
-            <option>Light Brown</option>
-            <option>Purple</option>
-            <option>Blue</option>
-            <option>Brown</option>
-            <option>Matte Green</option>
-            <option>Silver</option>
-            <option>Matte Pink</option>
-            <option>Matte Black</option>
-            <option>Black</option>
-            <option>Matte White</option>
-            <option>White</option>
-          </select>
+        <div class="field">
+          <label class="head" for="backColor">DOG NAME COLOR (BACK)</label>
+          <div class="box">
+            <select id="backColor">
+              <option value="" selected>Select color</option>
+              <option>Pink</option><option>Beige</option><option>Light Brown</option>
+              <option>Purple</option><option>Blue</option><option>Brown</option>
+              <option>Matte Green</option><option>Silver</option><option>Matte Pink</option>
+              <option>Matte Black</option><option>Black</option><option>Matte White</option><option>White</option>
+            </select>
+            <span class="chev"></span>
+          </div>
         </div>
 
-        <!-- Size -->
-        <div>
-          <label class="block text-sm font-semibold text-emerald-900">SIZE</label>
-          <select id="size" class="field mt-1">
-            <option value="" selected>Select size</option>
-            <option>Small — 29 × 29.4 mm</option>
-            <option>Medium — 34.5 × 35 mm</option>
-            <option>Big — 38 × 38.5 mm</option>
-          </select>
+        <div class="field">
+          <label class="head" for="size">SIZE</label>
+          <div class="box">
+            <select id="size">
+              <option value="" selected>Select size</option>
+              <option>Small — 29 × 29.4 mm</option>
+              <option>Medium — 34.5 × 35 mm</option>
+              <option>Big — 38 × 38.5 mm</option>
+            </select>
+            <span class="chev"></span>
+          </div>
         </div>
 
-        <!-- Letter type -->
-        <div>
-          <label class="block text-sm font-semibold text-emerald-900">LETTER TYPE</label>
-          <select id="letterType" class="field mt-1">
-            <option value="" selected>Select style</option>
-            <option value="Srisakdi (script)">Srisakdi (script)</option>
-            <option value="Apple Symbols (sans)">Apple Symbols (sans)</option>
-          </select>
+        <div class="field">
+          <label class="head" for="letterType">LETTER TYPE</label>
+          <div class="box">
+            <select id="letterType">
+              <option value="" selected>Select style</option>
+              <option value="srisakdi">Srisakdi (script)</option>
+              <option value="apple">Apple Symbols (sans)</option>
+            </select>
+            <span class="chev"></span>
+          </div>
         </div>
 
-        <!-- Notes (full width) -->
-        <div class="sm:col-span-2">
-          <label for="notes" class="block text-sm font-semibold text-emerald-900">NOTES</label>
-          <textarea id="notes" rows="4" class="field mt-1"
-            placeholder="Type any special requests here…"></textarea>
+        <!-- Notes spans full width -->
+        <div class="field row-span-2" style="grid-column:1/-1">
+          <label class="head" for="notes">NOTES</label>
+          <div class="box"><textarea id="notes" placeholder="Type any special requests here…"></textarea></div>
         </div>
       </div>
 
-      <!-- Examples image -->
-      <h3 class="mt-8 mb-3 text-xl font-semibold text-emerald-900">Selected letter type preview</h3>
-      <div class="rounded-2xl border border-slate-200 bg-white p-3">
-        <img
-          src="lettertype_preview_WHITE_DONE.png"
-          alt="Letter type examples: Srisakdi (script) and Apple Symbols (sans)"
-          style="display:block;width:100%;height:auto;border-radius:12px;"
-        />
+      <!-- Letter type examples -->
+      <h3 class="sectionTitle">Selected letter type preview</h3>
+      <div class="previewPanel">
+        <img src="./lettertype_preview_WHITE_DONE.png" alt="Letter type examples" style="display:block;width:100%;height:auto;border-radius:12px" />
       </div>
 
       <!-- Shareable link -->
-      <div class="mt-6 flex flex-col sm:flex-row gap-3">
-        <button id="createLink" type="button"
-          class="inline-flex justify-center items-center rounded-xl bg-emerald-600 text-white px-4 py-2 font-semibold hover:bg-emerald-700 active:scale-[.99] transition">
-          Create shareable link
-        </button>
-        <input id="shareLink" type="text" readonly
-          class="field grow"
-          placeholder="Your link will appear here…" />
+      <div class="btnRow">
+        <button class="btn" id="makeLink">Create shareable link</button>
+        <input id="shareUrl" class="box copyTarget" type="text" readonly placeholder="Your link will appear here…" />
       </div>
 
-      <p class="mt-2 text-xs text-slate-500">
-        Tip: Press <span class="font-semibold">Cmd+Shift+0</span> (Mac) or <span class="font-semibold">Ctrl+Shift+0</span> (Windows)
-        to open a read-only summary tab with all answers.
-      </p>
-    </section>
-
-    <!-- Summary card (hidden until mode=summary) -->
-    <section id="summaryCard" class="hidden rounded-2xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6">
-      <h2 class="text-2xl font-bold text-emerald-900">Order summary</h2>
-      <dl class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="rounded-xl bg-slate-50 p-4">
-          <dt class="text-[11px] uppercase tracking-wide text-slate-500">Dog’s name</dt>
-          <dd id="sDog" class="mt-1 font-medium"></dd>
-        </div>
-        <div class="rounded-xl bg-slate-50 p-4">
-          <dt class="text-[11px] uppercase tracking-wide text-slate-500">Owner phone</dt>
-          <dd id="sPhone" class="mt-1 font-medium"></dd>
-        </div>
-        <div class="rounded-xl bg-slate-50 p-4">
-          <dt class="text-[11px] uppercase tracking-wide text-slate-500">Chip number</dt>
-          <dd id="sChip" class="mt-1 font-medium"></dd>
-        </div>
-        <div class="rounded-xl bg-slate-50 p-4">
-          <dt class="text-[11px] uppercase tracking-wide text-slate-500">Base color (paw printed on)</dt>
-          <dd id="sBase" class="mt-1 font-medium"></dd>
-        </div>
-        <div class="rounded-xl bg-slate-50 p-4">
-          <dt class="text-[11px] uppercase tracking-wide text-slate-500">Paw color</dt>
-          <dd id="sPaw" class="mt-1 font-medium"></dd>
-        </div>
-        <div class="rounded-xl bg-slate-50 p-4">
-          <dt class="text-[11px] uppercase tracking-wide text-slate-500">Dog name color (back)</dt>
-          <dd id="sBack" class="mt-1 font-medium"></dd>
-        </div>
-        <div class="rounded-xl bg-slate-50 p-4">
-          <dt class="text-[11px] uppercase tracking-wide text-slate-500">Size</dt>
-          <dd id="sSize" class="mt-1 font-medium"></dd>
-        </div>
-        <div class="rounded-xl bg-slate-50 p-4">
-          <dt class="text-[11px] uppercase tracking-wide text-slate-500">Letter type</dt>
-          <dd id="sLetter" class="mt-1 font-medium"></dd>
-        </div>
-      </dl>
-      <div class="mt-4 rounded-xl bg-slate-50 p-4">
-        <dt class="text-[11px] uppercase tracking-wide text-slate-500">Notes</dt>
-        <dd id="sNotes" class="mt-1 font-medium whitespace-pre-wrap"></dd>
+      <div class="footer">
+        <span class="pill">3Dcrafteddesigns</span>
       </div>
+    </div>
+  </div>
 
-      <div class="mt-6 rounded-2xl border border-slate-200 bg-white p-3">
-        <img
-          src="lettertype_preview_WHITE_DONE.png"
-          alt="Letter type examples"
-          style="display:block;width:100%;height:auto;border-radius:12px;"
-        />
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="mt-8 text-center">
-      <span class="inline-block rounded-full bg-emerald-200/70 px-3 py-1 text-xs font-semibold text-emerald-800">
-        3Dcrafteddesigns
-      </span>
-    </footer>
-  </main>
-
-  <script>
-    // --- helpers
-    const $ = (id)=>document.getElementById(id);
-    const fields = ["dogName","ownerPhone","chipNumber","baseColor","pawColor","backColor","size","letterType","notes"];
-
-    function buildSummaryURL(){
-      const u = new URL(window.location.href);
-      // ensure we point to the /requestlink/ page (not summary)
-      u.search = ""; // clear
-      const params = new URLSearchParams();
-      params.set("mode","summary");
-      fields.forEach(f=>{
-        const el = $(f);
-        if(!el) return;
-        const v = (el.value||"").trim();
-        if(v) params.set(f, v);
-      });
-      u.search = params.toString();
-      return u.toString();
-    }
-
-    function fillSummaryFromURL(){
-      const q = new URLSearchParams(window.location.search);
-      const get = (k)=> q.get(k) || "";
-      // put values
-      $("sDog").textContent    = get("dogName");
-      $("sPhone").textContent  = get("ownerPhone");
-      $("sChip").textContent   = get("chipNumber");
-      $("sBase").textContent   = get("baseColor");
-      $("sPaw").textContent    = get("pawColor");
-      $("sBack").textContent   = get("backColor");
-      $("sSize").textContent   = get("size");
-      $("sLetter").textContent = get("letterType");
-      $("sNotes").textContent  = get("notes");
-    }
-
-    // --- share link button
-    $("createLink").addEventListener("click", ()=>{
-      const url = buildSummaryURL();
-      $("shareLink").value = url;
+<script>
+  // Build a shareable URL with all answers encoded as query params
+  function buildLink(){
+    const get = id => document.getElementById(id).value.trim();
+    const params = new URLSearchParams({
+      dog: get('dogName'),
+      phone: get('ownerPhone'),
+      chip: get('chip'),
+      base: get('baseColor'),
+      paw: get('pawColor'),
+      back: get('backColor'),
+      size: get('size'),
+      letter: get('letterType'),
+      notes: get('notes')
     });
 
-    // --- keyboard shortcut to open summary tab
-    document.addEventListener("keydown", (e)=>{
-      const isMac = navigator.platform.toUpperCase().includes("MAC");
-      const combo = (isMac && e.metaKey && e.shiftKey && e.key === "0") ||
-                    (!isMac && e.ctrlKey && e.shiftKey && e.key === "0");
-      if(combo){
-        e.preventDefault();
-        const url = buildSummaryURL();
-        window.open(url, "_blank", "noopener,noreferrer");
-      }
-    });
+    // If this file is served at /dog-tag/requestlink/, keep the same path
+    const base = location.href.split('#')[0].split('?')[0];
+    const url = `${base}?${params.toString()}`;
+    return url;
+  }
 
-    // --- mode switch (form vs summary)
-    (function init(){
-      const q = new URLSearchParams(window.location.search);
-      const mode = q.get("mode") || "form";
-      if(mode === "summary"){
-        $("formCard").classList.add("hidden");
-        $("summaryCard").classList.remove("hidden");
-        fillSummaryFromURL();
-      }
-    })();
-  </script>
+  document.getElementById('makeLink').addEventListener('click', ()=>{
+    const url = buildLink();
+    const out = document.getElementById('shareUrl');
+    out.value = url;
+    out.focus(); out.select();
+    try{ document.execCommand('copy'); }catch(e){}
+  });
+
+  // Optional: preload values if a link with ?params is opened
+  (function hydrateFromQuery(){
+    const q = new URLSearchParams(location.search);
+    const set = (id,k)=>{ if(q.has(k)) document.getElementById(id).value = q.get(k); };
+    set('dogName','dog'); set('ownerPhone','phone'); set('chip','chip');
+    set('baseColor','base'); set('pawColor','paw'); set('backColor','back');
+    set('size','size'); set('letterType','letter'); set('notes','notes');
+  })();
+</script>
 </body>
 </html>
